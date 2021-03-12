@@ -157,6 +157,7 @@
       <DependentUpon>Touche.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReservationInfoViewModel.cs" />
+    <Compile Include="Models\reservationViewModel.cs" />
     <Compile Include="Models\restaurant.cs">
       <DependentUpon>Touche.tt</DependentUpon>
     </Compile>
@@ -241,10 +242,12 @@
     <Content Include="Views\Admin\addMenuItems.cshtml" />
     <Content Include="Views\Admin\EditValues.cshtml" />
     <Content Include="Views\Shared\CustomerLayout.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\filtredView.cshtml" />
+    <Content Include="Views\Customer\ReserverTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
