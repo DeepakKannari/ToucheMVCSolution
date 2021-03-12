@@ -1,0 +1,74 @@
+﻿@model ToucheMVCProject.Models.ReservationInfoViewModel
+
+@{
+    ViewBag.Title = "addReservationinfo";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>addReservationinfo</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    @*<h4>reservationInfo</h4>*@
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.resturantId, null , htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.resturantId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Resturant Id" } })
+            @Html.ValidationMessageFor(model => model.resturantId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Timeslot, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Timeslot, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Timeslot, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.Timeslot, null, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Timeslot, new SelectList(ViewBag.timeSlot, "Value", "Text"), "Time-Slot", htmlAttributes: new { @class = "form-control"})
+            @Html.ValidationMessageFor(model => model.Timeslot, "", new { @class = "text-danger" })
+        </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalNoseats, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalNoseats, new { htmlAttributes = new { @class = "form-control", @placeholder = "Total Seats" } })
+                @Html.ValidationMessageFor(model => model.TotalNoseats, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.availableSeats, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.availableSeats, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.availableSeats, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <p class="text-danger">@ViewBag.exception</p>
+            </div>
+        </div>
+    </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

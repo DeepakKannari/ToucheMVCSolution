@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ToucheMVCProject.Models.restaurant>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    
+}
+@*<link href="~/Content/listStylesheet.css" rel="stylesheet" />*@
+<h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.opentime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.closetime)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
+@*<th>
+        @Html.DisplayNameFor(model => model.reservation.customerId)
+    </th>*@
+<th></th>
+</tr>
+
+@*<div class="">*@
+    @foreach (var item in Model)
+    {
+        @*<div class="gallery">
+            <a target="_blank" href="http://localhost:60136/Admin/viewMenu">
+                <img src="https://www.w3schools.com/css/img_5terre.jpg" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">
+                <ul>
+                    <li> @Html.DisplayFor(modelItem => item.name) </li>
+                    <li> @Html.DisplayFor(modelItem => item.status)</li>
+                    <li> @Html.DisplayFor(modelItem => item.state)</li>
+            </div>
+        </div>*@
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.opentime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.closetime)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.state)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.city)
+            </td>
+        @*<td>
+                @Html.DisplayFor(modelItem => item.reservation.customerId)
+            </td>*@
+        <td>
+                @Html.ActionLink("Add reservation info", "addReservationinfo", new { id=item.id }) |
+                @Html.ActionLink("Edit Status", "EditValues", new { id=item.id }) |
+                @Html.ActionLink("Menu", "viewMenu", new { id=item.id })
+            </td>
+        </tr>
+    }
+    @*</divc>*@
+
+    </table>

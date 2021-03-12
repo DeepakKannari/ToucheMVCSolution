@@ -1,0 +1,583 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="toucheModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="custId" />
+            <PropertyRef Name="deliveraddress" />
+          </Key>
+          <Property Name="custId" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="deliveraddress" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="custId" />
+          </Key>
+          <Property Name="custId" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="phoneNo" Type="varchar" MaxLength="10" />
+          <Property Name="img" Type="varchar" MaxLength="99" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="restaurantId" />
+            <PropertyRef Name="menuItemId" />
+          </Key>
+          <Property Name="restaurantId" Type="int" Nullable="false" />
+          <Property Name="menuItemId" Type="int" Nullable="false" />
+          <Property Name="dishName" Type="varchar" MaxLength="20" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="vtype" Type="varchar" MaxLength="20" />
+          <Property Name="cuisinetype" Type="varchar" MaxLength="20" />
+          <Property Name="price" Type="float" />
+          <Property Name="img" Type="varchar" MaxLength="99" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="custId" />
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="custId" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="orderid" Type="int" Nullable="false" />
+          <Property Name="dishname" Type="varchar" MaxLength="20" />
+          <Property Name="price" Type="varchar" MaxLength="20" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="registration">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" />
+          <Property Name="password" Type="varchar" MaxLength="20" />
+          <Property Name="role" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="reservation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="customerId" Type="varchar" MaxLength="20" />
+          <Property Name="restaurantId" Type="int" />
+          <Property Name="noOfPeople" Type="int" />
+          <Property Name="timeslot" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="reservationInfo">
+          <Key>
+            <PropertyRef Name="resturantId" />
+            <PropertyRef Name="Timeslot" />
+          </Key>
+          <Property Name="resturantId" Type="int" Nullable="false" />
+          <Property Name="Timeslot" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TotalNoseats" Type="int" />
+          <Property Name="availableSeats" Type="int" />
+        </EntityType>
+        <EntityType Name="restaurant">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="address" Type="varchar" MaxLength="50" />
+          <Property Name="status" Type="varchar" MaxLength="20" />
+          <Property Name="category" Type="varchar" MaxLength="20" />
+          <Property Name="opentime" Type="time" Precision="7" />
+          <Property Name="closetime" Type="time" Precision="7" />
+          <Property Name="city" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="customer_fk">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="custId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="customerId_fk">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="address" Type="Self.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="custId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="customerid_reserv_fk">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservation" Type="Self.reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="reservation">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="restaurantId_cust_reserv_fk">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservation" Type="Self.reservation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reservation">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="resturantid_fk">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Menu">
+              <PropertyRef Name="restaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="resturantId_reserve_fk">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservationInfo" Type="Self.reservationInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reservationInfo">
+              <PropertyRef Name="resturantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="username_fk">
+          <End Role="registration" Type="Self.registration" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="registration">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="custId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="toucheModelStoreContainer">
+          <EntitySet Name="address" EntityType="Self.address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="registration" EntityType="Self.registration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reservation" EntityType="Self.reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reservationInfo" EntityType="Self.reservationInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="restaurant" EntityType="Self.restaurant" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="customer_fk" Association="Self.customer_fk">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="customerId_fk" Association="Self.customerId_fk">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="customerid_reserv_fk" Association="Self.customerid_reserv_fk">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="reservation" EntitySet="reservation" />
+          </AssociationSet>
+          <AssociationSet Name="restaurantId_cust_reserv_fk" Association="Self.restaurantId_cust_reserv_fk">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="reservation" EntitySet="reservation" />
+          </AssociationSet>
+          <AssociationSet Name="resturantid_fk" Association="Self.resturantid_fk">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="Menu" EntitySet="Menu" />
+          </AssociationSet>
+          <AssociationSet Name="resturantId_reserve_fk" Association="Self.resturantId_reserve_fk">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="reservationInfo" EntitySet="reservationInfo" />
+          </AssociationSet>
+          <AssociationSet Name="username_fk" Association="Self.username_fk">
+            <End Role="registration" EntitySet="registration" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="toucheModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="custId" />
+            <PropertyRef Name="deliveraddress" />
+          </Key>
+          <Property Name="custId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="deliveraddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.customerId_fk" FromRole="address" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="custId" />
+          </Key>
+          <Property Name="custId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="img" Type="String" MaxLength="99" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="addresses" Relationship="Self.customerId_fk" FromRole="Customer" ToRole="address" />
+          <NavigationProperty Name="orders" Relationship="Self.customer_fk" FromRole="Customer" ToRole="orders" />
+          <NavigationProperty Name="reservations" Relationship="Self.customerid_reserv_fk" FromRole="Customer" ToRole="reservation" />
+          <NavigationProperty Name="registration" Relationship="Self.username_fk" FromRole="Customer" ToRole="registration" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="restaurantId" />
+            <PropertyRef Name="menuItemId" />
+          </Key>
+          <Property Name="restaurantId" Type="Int32" Nullable="false" />
+          <Property Name="menuItemId" Type="Int32" Nullable="false" />
+          <Property Name="dishName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vtype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cuisinetype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Double" />
+          <Property Name="img" Type="String" MaxLength="99" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="restaurant" Relationship="Self.resturantid_fk" FromRole="Menu" ToRole="restaurant" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="custId" />
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="custId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="orderid" Type="Int32" Nullable="false" />
+          <Property Name="dishname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.customer_fk" FromRole="orders" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="registration">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.username_fk" FromRole="registration" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="reservation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="customerId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="restaurantId" Type="Int32" />
+          <Property Name="noOfPeople" Type="Int32" />
+          <Property Name="timeslot" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.customerid_reserv_fk" FromRole="reservation" ToRole="Customer" />
+          <NavigationProperty Name="restaurant" Relationship="Self.restaurantId_cust_reserv_fk" FromRole="reservation" ToRole="restaurant" />
+        </EntityType>
+        <EntityType Name="reservationInfo">
+          <Key>
+            <PropertyRef Name="resturantId" />
+            <PropertyRef Name="Timeslot" />
+          </Key>
+          <Property Name="resturantId" Type="Int32" Nullable="false" />
+          <Property Name="Timeslot" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TotalNoseats" Type="Int32" />
+          <Property Name="availableSeats" Type="Int32" />
+          <NavigationProperty Name="restaurant" Relationship="Self.resturantId_reserve_fk" FromRole="reservationInfo" ToRole="restaurant" />
+        </EntityType>
+        <EntityType Name="restaurant">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="opentime" Type="Time" Precision="7" />
+          <Property Name="closetime" Type="Time" Precision="7" />
+          <Property Name="city" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Menus" Relationship="Self.resturantid_fk" FromRole="restaurant" ToRole="Menu" />
+          <NavigationProperty Name="reservation" Relationship="Self.restaurantId_cust_reserv_fk" FromRole="restaurant" ToRole="reservation" />
+          <NavigationProperty Name="reservationInfoes" Relationship="Self.resturantId_reserve_fk" FromRole="restaurant" ToRole="reservationInfo" />
+        </EntityType>
+        <Association Name="customerId_fk">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="address" Type="Self.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="custId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="customer_fk">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="orders" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="custId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="customerid_reserv_fk">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservation" Type="Self.reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="reservation">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="username_fk">
+          <End Role="registration" Type="Self.registration" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="registration">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="custId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="resturantid_fk">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Menu">
+              <PropertyRef Name="restaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="restaurantId_cust_reserv_fk">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservation" Type="Self.reservation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reservation">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="resturantId_reserve_fk">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reservationInfo" Type="Self.reservationInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reservationInfo">
+              <PropertyRef Name="resturantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="toucheEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="addresses" EntityType="Self.address" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Menus" EntityType="Self.Menu" />
+          <EntitySet Name="orders" EntityType="Self.order" />
+          <EntitySet Name="registrations" EntityType="Self.registration" />
+          <EntitySet Name="reservations" EntityType="Self.reservation" />
+          <EntitySet Name="reservationInfoes" EntityType="Self.reservationInfo" />
+          <EntitySet Name="restaurants" EntityType="Self.restaurant" />
+          <AssociationSet Name="customerId_fk" Association="Self.customerId_fk">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="address" EntitySet="addresses" />
+          </AssociationSet>
+          <AssociationSet Name="customer_fk" Association="Self.customer_fk">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="customerid_reserv_fk" Association="Self.customerid_reserv_fk">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="reservation" EntitySet="reservations" />
+          </AssociationSet>
+          <AssociationSet Name="username_fk" Association="Self.username_fk">
+            <End Role="registration" EntitySet="registrations" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="resturantid_fk" Association="Self.resturantid_fk">
+            <End Role="restaurant" EntitySet="restaurants" />
+            <End Role="Menu" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="restaurantId_cust_reserv_fk" Association="Self.restaurantId_cust_reserv_fk">
+            <End Role="restaurant" EntitySet="restaurants" />
+            <End Role="reservation" EntitySet="reservations" />
+          </AssociationSet>
+          <AssociationSet Name="resturantId_reserve_fk" Association="Self.resturantId_reserve_fk">
+            <End Role="restaurant" EntitySet="restaurants" />
+            <End Role="reservationInfo" EntitySet="reservationInfoes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="toucheModelStoreContainer" CdmEntityContainer="toucheEntities">
+          <EntitySetMapping Name="addresses">
+            <EntityTypeMapping TypeName="toucheModel.address">
+              <MappingFragment StoreEntitySet="address">
+                <ScalarProperty Name="custId" ColumnName="custId" />
+                <ScalarProperty Name="deliveraddress" ColumnName="deliveraddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="toucheModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="custId" ColumnName="custId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phoneNo" ColumnName="phoneNo" />
+                <ScalarProperty Name="img" ColumnName="img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="toucheModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="restaurantId" ColumnName="restaurantId" />
+                <ScalarProperty Name="menuItemId" ColumnName="menuItemId" />
+                <ScalarProperty Name="dishName" ColumnName="dishName" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="vtype" ColumnName="vtype" />
+                <ScalarProperty Name="cuisinetype" ColumnName="cuisinetype" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="img" ColumnName="img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="toucheModel.order">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="custId" ColumnName="custId" />
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+                <ScalarProperty Name="dishname" ColumnName="dishname" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="registrations">
+            <EntityTypeMapping TypeName="toucheModel.registration">
+              <MappingFragment StoreEntitySet="registration">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reservations">
+            <EntityTypeMapping TypeName="toucheModel.reservation">
+              <MappingFragment StoreEntitySet="reservation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="restaurantId" ColumnName="restaurantId" />
+                <ScalarProperty Name="noOfPeople" ColumnName="noOfPeople" />
+                <ScalarProperty Name="timeslot" ColumnName="timeslot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reservationInfoes">
+            <EntityTypeMapping TypeName="toucheModel.reservationInfo">
+              <MappingFragment StoreEntitySet="reservationInfo">
+                <ScalarProperty Name="resturantId" ColumnName="resturantId" />
+                <ScalarProperty Name="Timeslot" ColumnName="Timeslot" />
+                <ScalarProperty Name="TotalNoseats" ColumnName="TotalNoseats" />
+                <ScalarProperty Name="availableSeats" ColumnName="availableSeats" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="restaurants">
+            <EntityTypeMapping TypeName="toucheModel.restaurant">
+              <MappingFragment StoreEntitySet="restaurant">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="opentime" ColumnName="opentime" />
+                <ScalarProperty Name="closetime" ColumnName="closetime" />
+                <ScalarProperty Name="city" ColumnName="city" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

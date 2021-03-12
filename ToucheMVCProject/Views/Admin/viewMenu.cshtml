@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ToucheMVCProject.Models.Menu>
+
+@{
+    ViewBag.Title = "viewMenu";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>viewMenu</h2>
+
+<p>
+    @Html.ActionLink("Add new menuitem", "addMenuItems")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.dishName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.vtype)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cuisinetype)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.img)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.restaurant.name)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.dishName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.vtype)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cuisinetype)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.img)
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.restaurant.name)
+        </td*@>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+    </tr>
+}
+
+</table>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4502de5b07ef44909446b49d8841528a" Name="Diagram1">
+        <EntityTypeShape EntityType="toucheModel.address" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="toucheModel.Customer" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="toucheModel.Menu" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="toucheModel.order" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="toucheModel.registration" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="toucheModel.reservation" Width="1.5" PointX="8.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="toucheModel.reservationInfo" Width="1.5" PointX="8.25" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="toucheModel.restaurant" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="toucheModel.customerId_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="toucheModel.customer_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="toucheModel.customerid_reserv_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="toucheModel.username_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="toucheModel.resturantid_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="toucheModel.restaurantId_cust_reserv_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="toucheModel.resturantId_reserve_fk" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
