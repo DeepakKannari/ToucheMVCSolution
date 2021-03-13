@@ -252,6 +252,9 @@
     <Content Include="Views\Customer\filtredRestaurantsView.cshtml" />
     <Content Include="Views\LogIn\LogIn.cshtml" />
     <Content Include="Views\Customer\ViewCart.cshtml" />
+    <Content Include="Views\Customer\filterbyVeg.cshtml" />
+    <Content Include="Views\Customer\filterbyNonVeg.cshtml" />
+    <Content Include="Views\Customer\filterbyPrice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

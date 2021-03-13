@@ -17,65 +17,122 @@ namespace ToucheMVCProject.Controllers
         // GET: Customer
         public ActionResult Index()
         {
+            try
+            {
+                if (TempData.ContainsKey("custId"))
+                {
+                    orderId = Convert.ToInt32(TempData.Peek("orderId"));
+                    restaurantViewModel restaurantView = new restaurantViewModel();
+                    restaurantView.populateLocation();
+                    ViewBag.locations = restaurantView.restaurantlocations;
+                    custId = TempData.Peek("custId") as string;
+                    ViewBag.tester = custId;
+                    return View(dbContext.restaurants.ToList());
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View(dbContext.restaurants.ToList());
+            }
+                     
+            
+        }
+        //searchform -Renders the
+        //form for filtering food
+        //by location.
+        public ActionResult searchform()
+        {
             if (TempData.ContainsKey("custId"))
             {
-                orderId = Convert.ToInt32(TempData.Peek("orderId"));
-                restaurantViewModel restaurantView = new restaurantViewModel();
-                restaurantView.populateLocation();
-                ViewBag.locations = restaurantView.restaurantlocations;
-                custId = TempData["custId"] as string;
-                ViewBag.tester = custId;
-                return View(dbContext.restaurants.ToList());
+
+                return View();
+            }
+            else{
+                custId = null;
+                return RedirectToAction("LogIn", "LogIn");
+            }
+        }
+
+        //orderLocationform - Post method for 
+        //search food by location
+        [HttpPost]
+        public ActionResult orderLocationform(FormCollection formvalues)
+        {
+            if (TempData.ContainsKey("custId"))
+            {
+                TempData["location"] = formvalues[0];
+                return RedirectToAction("SearchFoodByLocation"/*, new { location = formvalues[0] }*/);
             }
             else
             {
                 custId = null;
-                return RedirectToAction("LogIn","LogIn");
+                return RedirectToAction("LogIn", "LogIn");
             }
-          
-            
-            return View(dbContext.restaurants.ToList());
         }
 
-        public ActionResult searchform()
+        //SearchFoodByLocation- Filter Food
+        //by location and display the table of menu items 
+        public ActionResult SearchFoodByLocation(/*string locatio*/)
         {
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult orderLocationform(FormCollection formvalues)
-        {
-            return RedirectToAction("SearchFoodByLocation",new{location=formvalues[0]});
-        }
-
-        public ActionResult SearchFoodByLocation(string location)
-        {
-                TempData["location"] = location;
-                var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
-                r => r.id,
-                m => m.restaurantId,
-                (r, m) => new { rname=r.name,rid = r.id, location = r.city,status=r.status,menuitemId= m.menuItemId,dishName= m.dishName, description= m.description,type= m.vtype,cuisinetype= m.cuisinetype,price= m.price });
-            var result = joinedTable.Where(s=>s.location.Equals(location) && s.status.Equals("open")).Select(m=> new { rname=m.rname ,rid=m.rid,menuitemId=m.menuitemId, dishname=m.dishName,description=m.description,type=m.type,cuisinetype=m.cuisinetype,price=m.price});
-            List<Menu> menuTable = new List<Menu>();
-            
-            foreach (var item in result)
+            string location = TempData.Peek("location") as string;
+            try
             {
-                Menu mentuple = new Menu();
-                mentuple.menuItemId = item.menuitemId;
-                mentuple.dishName = item.dishname;
-                mentuple.description = item.description;
-                mentuple.vtype= item.type;
-                mentuple.cuisinetype = item.cuisinetype;
-                mentuple.price = item.price;
-                menuTable.Add(mentuple);
+                if (TempData.ContainsKey("custId"))
+                {
+                    //TempData["location"] = location;
+                    var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
+                    r => r.id,
+                    m => m.restaurantId,
+                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, cuisinetype = m.cuisinetype, price = m.price });
+                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, cuisinetype = m.cuisinetype, price = m.price });
+                    List<Menu> menuTable = new List<Menu>();
+
+                    foreach (var item in result)
+                    {
+                        Menu mentuple = new Menu();
+                        mentuple.menuItemId = item.menuitemId;
+                        mentuple.dishName = item.dishname;
+                        mentuple.description = item.description;
+                        mentuple.vtype = item.type;
+                        mentuple.cuisinetype = item.cuisinetype;
+                        mentuple.price = item.price;
+                        menuTable.Add(mentuple);
+                    }
+                    return View(menuTable);
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
             }
-            return View(menuTable);
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
         }
+
         [HttpPost]
         public ActionResult orderLocation(FormCollection formvalues)
         {
-            return RedirectToAction("SearchFoodByLocation", new { location = formvalues[0] });
+            if (TempData.ContainsKey("custId"))
+            {
+                TempData["location"] = formvalues[0];
+
+                return RedirectToAction("SearchFoodByLocation"/*, new { location = formvalues[0] }*/);
+            }
+            else
+            {
+                custId = null;
+                return RedirectToAction("LogIn", "LogIn");
+            }
         }
         //public ActionResult filtredMenuView(string location)
         //{
@@ -84,57 +141,287 @@ namespace ToucheMVCProject.Controllers
 
         //}
 
-
+        //dropdown- flters resturant by location
         [HttpPost]
-        public ActionResult dropdown(FormCollection formvalues) 
+        public ActionResult resturantsearchLocation(FormCollection formvalues) 
         {
-            return RedirectToAction("filtredRestaurantsView", new { location = formvalues[0]});
+            if (TempData.ContainsKey("custId"))
+            {
+                return RedirectToAction("filtredRestaurantsView", new { location = formvalues[0]});
+            }
+            else
+            {
+                custId = null;
+                return RedirectToAction("LogIn", "LogIn");
+            }
         }
 
         public ActionResult filtredRestaurantsView(string location)
         {
-           var result = dbContext.restaurants.Where(s => s.city.Equals(location)&& s.status.Equals("open"));
-            return View(result);
+            try
+            {
+                if (TempData.ContainsKey("custId"))
+                {
+                    var result = dbContext.restaurants.Where(s => s.city.Equals(location) && s.status.Equals("open"));
+                    return View(result);
+
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+
+            }
             
         }
 
         public ActionResult ReserverTable()
         {
-            reservationViewModel reservationView = new reservationViewModel();
-            ViewBag.timeSlots = reservationView.timeSlots;
+            try
+            {
+                if (TempData.ContainsKey("custId"))
+                {
+                    reservationViewModel reservationView = new reservationViewModel();
+                     ViewBag.timeSlots = reservationView.timeSlots;
 
-            return View();
+                     return View();
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
+            }
+            catch(Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
         }
 
         [HttpPost]
         public ActionResult orderFood(FormCollection fromvalue)
         {
-            
-            order ordertuple = new order();
-            ordertuple.orderid = orderId++;
-            ordertuple.custId = custId;
-            ordertuple.quantity = Convert.ToInt32(fromvalue[0]);
-            ordertuple.dishname = fromvalue[1];
-            ordertuple.price = Convert.ToDouble(fromvalue[0]);
-            sessionOrders.Add(ordertuple);
-            //dbContext.orders.Add(ordertuple);
-            //dbContext.SaveChanges();
-            string location = TempData["location"] as string;
-            return RedirectToAction("SearchFoodByLocation",new { location= location });
+            try
+            {
+                if (TempData.ContainsKey("custId"))
+                {
+                    order ordertuple = new order();
+                    ordertuple.orderid = orderId++;
+                    ordertuple.custId = custId;
+                    ordertuple.quantity = Convert.ToInt32(fromvalue[0]);
+                    ordertuple.dishname = fromvalue[1];
+                    ordertuple.price = Convert.ToDouble(fromvalue[2]);
+                    sessionOrders.Add(ordertuple);
+                    //dbContext.orders.Add(ordertuple);
+                    //dbContext.SaveChanges();
+                    string location = TempData.Peek("location") as string;
+                    return RedirectToAction("SearchFoodByLocation", new { location = location });
+                }
+                else 
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
         }
 
         public ActionResult ViewCart()
         {
-            double totalBill=0;
-            int totalQuantity =0 ;
-            foreach (var item in sessionOrders)
+            try
             {
-                totalBill +=  Convert.ToDouble(item.price * item.quantity);
-                totalQuantity += Convert.ToInt32(item.quantity);
+                if (TempData.ContainsKey("custId"))
+                {
+                    double totalBill = 0;
+                int totalQuantity = 0;
+                foreach (var item in sessionOrders)
+                {
+                    totalBill += Convert.ToDouble(item.price * item.quantity);
+                    totalQuantity += Convert.ToInt32(item.quantity);
+                }
+                ViewBag.totalBill = totalBill;
+                ViewBag.totalQuantity = totalQuantity;
+                return View(sessionOrders);
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
             }
-            ViewBag.totalBill = totalBill;
-            ViewBag.totalQuantity = totalQuantity;
-            return View(sessionOrders);
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
+        }
+
+        public ActionResult placeOrder()
+        {
+            try
+            {
+                if (TempData.ContainsKey("custId"))
+                {
+                    dbContext.orders.AddRange(sessionOrders);
+                    dbContext.SaveChanges();
+                    //sessionOrders.Clear();
+                    //ViewBag.ordermessage = "Your's Order has been placed";
+                    return RedirectToAction("ViewCart");
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
+        }
+
+        public ActionResult filterbyVeg()
+        {
+            string location = TempData.Peek("location") as string;
+            try
+            {
+                if (TempData.ContainsKey("custId"))
+                {
+                    //TempData["location"] = location;
+                    var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
+                    r => r.id,
+                    m => m.restaurantId,
+                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, cuisinetype = m.cuisinetype, price = m.price });
+                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open") && s.type.Equals("veg")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, cuisinetype = m.cuisinetype, price = m.price });
+                    List<Menu> menuTable = new List<Menu>();
+
+                    foreach (var item in result)
+                    {
+                        Menu mentuple = new Menu();
+                        mentuple.menuItemId = item.menuitemId;
+                        mentuple.dishName = item.dishname;
+                        mentuple.description = item.description;
+                        mentuple.vtype = item.type;
+                        mentuple.cuisinetype = item.cuisinetype;
+                        mentuple.price = item.price;
+                        menuTable.Add(mentuple);
+                    }
+                    return View(menuTable);
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
+
+            
+            
+        }
+
+        public ActionResult filterbyNonVeg()
+        {
+            string location = TempData.Peek("location") as string;
+            try
+            {
+                if (TempData.ContainsKey("custId"))
+                {
+                    //TempData["location"] = location;
+                    var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
+                    r => r.id,
+                    m => m.restaurantId,
+                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, cuisinetype = m.cuisinetype, price = m.price });
+                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open") && s.type.Equals("non-veg")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, cuisinetype = m.cuisinetype, price = m.price });
+                    List<Menu> menuTable = new List<Menu>();
+
+                    foreach (var item in result)
+                    {
+                        Menu mentuple = new Menu();
+                        mentuple.menuItemId = item.menuitemId;
+                        mentuple.dishName = item.dishname;
+                        mentuple.description = item.description;
+                        mentuple.vtype = item.type;
+                        mentuple.cuisinetype = item.cuisinetype;
+                        mentuple.price = item.price;
+                        menuTable.Add(mentuple);
+                    }
+                    return View(menuTable);
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
+
+
+
+        }
+
+        public ActionResult filterbyPrice()
+        {
+            string location = TempData.Peek("location") as string;
+            try
+            {
+                if (TempData.ContainsKey("custId"))
+                {
+                    //TempData["location"] = location;
+                    var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
+                    r => r.id,
+                    m => m.restaurantId,
+                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, cuisinetype = m.cuisinetype, price = m.price });
+                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, cuisinetype = m.cuisinetype, price = m.price }).OrderBy(m=>m.price);
+                    List<Menu> menuTable = new List<Menu>();
+
+                    foreach (var item in result)
+                    {
+                        Menu mentuple = new Menu();
+                        mentuple.menuItemId = item.menuitemId;
+                        mentuple.dishName = item.dishname;
+                        mentuple.description = item.description;
+                        mentuple.vtype = item.type;
+                        mentuple.cuisinetype = item.cuisinetype;
+                        mentuple.price = item.price;
+                        menuTable.Add(mentuple);
+                    }
+                    return View(menuTable);
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
+
+
+
         }
 
         public JsonResult isSeatAvailable(int seats,int id,string timeslot)

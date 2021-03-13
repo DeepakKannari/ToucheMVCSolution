@@ -42,8 +42,8 @@ namespace ToucheMVCProject.Models
 
         public List<SelectListItem> types= new List<SelectListItem>()
         {
-            new SelectListItem() { Text="Veg",Value="Veg"},
-            new SelectListItem() { Text="Non-Veg",Value="Non-Veg"},
+            new SelectListItem() { Text="Veg",Value="veg"},
+            new SelectListItem() { Text="Non-Veg",Value="non-veg"},
         };
 
         public List<SelectListItem> restaurantIds = new List<SelectListItem>();

@@ -29,8 +29,16 @@ namespace ToucheMVCProject.Controllers
             {
                 switch (result.role)
                 {
-                    case "customer":/*var maxvalue = dbContext.orders.Where(ord => ord.custId.Equals(result.userId)).Select(s => s.orderid).Max();*/
-                        TempData["orderId"] = 1;
+                    case "customer": if (dbContext.orders.Any(ord => ord.custId.Equals(result.userId)))
+                        {
+                            var maxvalue = dbContext.orders.Where(ord => ord.custId.Equals(result.userId)).Select(s => s.orderid).Max();
+                            TempData["orderId"] = maxvalue;
+                        }
+                        else
+                        {
+                            TempData["orderId"] = 1;
+                        }
+                        /*var maxvalue = dbContext.orders.Where(ord => ord.custId.Equals(result.userId)).Select(s => s.orderid).Max();*/
                         TempData["custId"] = result.userId;
                         return RedirectToAction("Index", "Customer");
                     case "admin":

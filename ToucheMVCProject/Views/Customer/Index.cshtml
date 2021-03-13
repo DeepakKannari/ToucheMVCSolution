@@ -10,10 +10,11 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<form action="/Customer/dropdown" method="post" novalidate="novalidate">
+<form action="/Customer/resturantsearchLocation" method="post" novalidate="novalidate">
     <input id="searchlocation" name="searchlocation" type="text"/>
     <input type="submit" value="Search">
 </form>
+<p>@ViewBag.errorMessage </p>
 
 
     <!--<table class="table">

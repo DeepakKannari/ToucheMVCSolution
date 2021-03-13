@@ -54,7 +54,7 @@
     <tr>
         <th>Total bill</th>
         <th>Total quantity</th>
-        
+        <th></th>
     </tr>
     <tr>
         <td>
@@ -63,5 +63,6 @@
         <td>
             @ViewBag.totalQuantity
         </td>
-     </tr>
+        <td>@Html.ActionLink("Order", "placeOrder","Customer") </td>
+</tr>
 </table>

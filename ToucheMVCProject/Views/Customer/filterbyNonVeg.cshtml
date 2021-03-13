@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ToucheMVCProject.Models.Menu>
+
+@{
+    ViewBag.Title = "filterbyNonVeg";
+    Layout = "~/Views/Shared/CustomerLayout.cshtml";
+}
+
+<h2>filterbyNonVeg</h2>
+
+<p>
+    @Html.ActionLink("All", "SearchFoodByLocation")
+    @Html.ActionLink("Veg", "filterbyVeg")
+    @Html.ActionLink("Non-Veg", "filterbyNonVeg")
+    @Html.ActionLink("Price", "filterbyPrice")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.dishName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.vtype)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cuisinetype)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.img)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.restaurant.name)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.dishName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.vtype)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.cuisinetype)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.price)
+    </td>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.img)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.restaurant.name)
+        </td>*@
+    
+    <td>
+        <form action="/Customer/orderFood" method="post" novalidate="novalidate">
+            <input id="quantity" name="quantity" type="number" />
+            <input id="dishname" name="dishname" type="hidden" value=@item.dishName>
+            <input id="price" name="price" type="hidden" value=@item.price>
+
+
+            <input type="submit" value="Add">
+        </form>
+        <p>@ViewBag.errorMessage</p>
+    </td>
+</tr>
+}
+
+</table>

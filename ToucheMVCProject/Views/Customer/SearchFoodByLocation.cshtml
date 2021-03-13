@@ -8,7 +8,11 @@
 <h2>SearchFoodByLocation</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("All", "SearchFoodByLocation")
+    @Html.ActionLink("Veg", "filterbyVeg")
+    @Html.ActionLink("Non-Veg", "filterbyNonVeg")
+    @Html.ActionLink("Price", "filterbyPrice")
+
 </p>
 <table class="table">
     <tr>
@@ -68,6 +72,7 @@
 
                 <input type="submit" value="Add">
             </form>
+            <p>@ViewBag.errorMessage</p>
             @*@Html.ActionLink("Order","");
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })*@ 
             @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
