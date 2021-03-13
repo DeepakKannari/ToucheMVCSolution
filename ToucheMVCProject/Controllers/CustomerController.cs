@@ -10,13 +10,29 @@ namespace ToucheMVCProject.Controllers
     public class CustomerController : Controller
     {
         toucheEntities dbContext = new toucheEntities();
+        static string custId;
+        static int orderId;
+        List<order> sessionOrders = new List<order>();
 
         // GET: Customer
         public ActionResult Index()
         {
-            restaurantViewModel restaurantView = new restaurantViewModel();
-            restaurantView.populateLocation();
-            ViewBag.locations = restaurantView.restaurantlocations;
+            if (TempData.ContainsKey("custId"))
+            {
+                orderId = Convert.ToInt32(TempData.Peek("orderId"));
+                restaurantViewModel restaurantView = new restaurantViewModel();
+                restaurantView.populateLocation();
+                ViewBag.locations = restaurantView.restaurantlocations;
+                custId = TempData["custId"] as string;
+                ViewBag.tester = custId;
+                return View(dbContext.restaurants.ToList());
+            }
+            else
+            {
+                custId = null;
+                return RedirectToAction("LogIn","LogIn");
+            }
+          
             
             return View(dbContext.restaurants.ToList());
         }
@@ -35,16 +51,12 @@ namespace ToucheMVCProject.Controllers
 
         public ActionResult SearchFoodByLocation(string location)
         {
-            //var joinresult = dbContext.bugs.Join(dbContext.project_modules,
-            //    b => b.moduleId,
-            //    p => p.id,
-            //    (b, p) => new { b.id, b.moduleId, b.BugStatus, b.BugDescription, p.developer });
-            //var result = joinresult.Where(s => s.developer.Equals(developerId)).Select(b => new { id = b.id, moduleid = b.moduleId, bugstatus = b.BugStatus, bugdescription = b.BugDescription });
-            var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
+                TempData["location"] = location;
+                var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
                 r => r.id,
                 m => m.restaurantId,
-                (r, m) => new { r.id,r.city,r.status, m.menuItemId, m.dishName, m.description, m.vtype, m.cuisinetype, m.price });
-            var result = joinedTable.Where(s=>s.city.Equals(location) && s.status.Equals("open")).Select(m=> new { rid=m.id,menuitemId=m.menuItemId,dishname=m.dishName,description=m.description,vtype=m.vtype,cuisinetype=m.cuisinetype,price=m.price});
+                (r, m) => new { rname=r.name,rid = r.id, location = r.city,status=r.status,menuitemId= m.menuItemId,dishName= m.dishName, description= m.description,type= m.vtype,cuisinetype= m.cuisinetype,price= m.price });
+            var result = joinedTable.Where(s=>s.location.Equals(location) && s.status.Equals("open")).Select(m=> new { rname=m.rname ,rid=m.rid,menuitemId=m.menuitemId, dishname=m.dishName,description=m.description,type=m.type,cuisinetype=m.cuisinetype,price=m.price});
             List<Menu> menuTable = new List<Menu>();
             
             foreach (var item in result)
@@ -53,9 +65,10 @@ namespace ToucheMVCProject.Controllers
                 mentuple.menuItemId = item.menuitemId;
                 mentuple.dishName = item.dishname;
                 mentuple.description = item.description;
-                mentuple.vtype= item.vtype;
+                mentuple.vtype= item.type;
                 mentuple.cuisinetype = item.cuisinetype;
                 mentuple.price = item.price;
+                menuTable.Add(mentuple);
             }
             return View(menuTable);
         }
@@ -90,6 +103,35 @@ namespace ToucheMVCProject.Controllers
             reservationViewModel reservationView = new reservationViewModel();
             ViewBag.timeSlots = reservationView.timeSlots;
 
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult orderFood(FormCollection fromvalue)
+        {
+            
+            order ordertuple = new order();
+            ordertuple.orderid = orderId++;
+            ordertuple.custId = custId;
+            ordertuple.quantity = Convert.ToInt32(fromvalue[0]);
+            ordertuple.dishname = fromvalue[1];
+            ordertuple.price = Convert.ToDouble(fromvalue[0]);
+            sessionOrders.Add(ordertuple);
+            //dbContext.orders.Add(ordertuple);
+            //dbContext.SaveChanges();
+            string location = TempData["location"] as string;
+            return RedirectToAction("SearchFoodByLocation",new { location= location });
+        }
+
+        public ActionResult ViewCart()
+        {
+            double totalBill=0;
+            int totalQuantity =0 ;
+            foreach (var item in sessionOrders)
+            {
+                totalBill +=  Convert.ToDouble(item.price * item.quantity);
+                totalQuantity += Convert.ToInt32(item.quantity);
+            }
             return View();
         }
 

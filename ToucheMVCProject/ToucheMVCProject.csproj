@@ -131,6 +131,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -150,6 +151,7 @@
     <Compile Include="Models\registration.cs">
       <DependentUpon>Touche.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Models\reservation.cs">
       <DependentUpon>Touche.tt</DependentUpon>
     </Compile>
@@ -247,6 +249,9 @@
     <Content Include="Views\Customer\ReserverTable.cshtml" />
     <Content Include="Views\Customer\SearchFoodByLocation.cshtml" />
     <Content Include="Views\Customer\searchform.cshtml" />
+    <Content Include="Views\Customer\filtredRestaurantsView.cshtml" />
+    <Content Include="Views\LogIn\LogIn.cshtml" />
+    <Content Include="Views\Customer\ViewCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

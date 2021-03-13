@@ -27,12 +27,12 @@
         <th>
             @Html.DisplayNameFor(model => model.price)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.img)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.restaurant.name)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -53,16 +53,25 @@
         <td>
             @Html.DisplayFor(modelItem => item.price)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.img)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.restaurant.name)
-        </td>
+        </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            <form action="/Customer/orderFood" method="post" novalidate="novalidate">
+                <input id="quantity" name="quantity" type="number" />
+                <input id="dishname" name="dishname" type="hidden" value=@item.dishName>
+                <input id="price" name="price" type="hidden" value=@item.price>
+                
+
+                <input type="submit" value="Add">
+            </form>
+            @*@Html.ActionLink("Order","");
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })*@ 
+            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
         </td>
     </tr>
 }

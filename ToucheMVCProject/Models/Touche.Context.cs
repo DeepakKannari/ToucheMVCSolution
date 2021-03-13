@@ -33,9 +33,5 @@ namespace ToucheMVCProject.Models
         public virtual DbSet<reservation> reservations { get; set; }
         public virtual DbSet<reservationInfo> reservationInfoes { get; set; }
         public virtual DbSet<restaurant> restaurants { get; set; }
-
-        public System.Data.Entity.DbSet<ToucheMVCProject.Models.restaurantViewModel> restaurantViewModels { get; set; }
-
-        public System.Data.Entity.DbSet<ToucheMVCProject.Models.reservationViewModel> reservationViewModels { get; set; }
     }
 }

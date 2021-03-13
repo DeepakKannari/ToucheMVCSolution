@@ -34,7 +34,7 @@
           <Property Name="vtype" Type="varchar" MaxLength="20" />
           <Property Name="cuisinetype" Type="varchar" MaxLength="20" />
           <Property Name="price" Type="float" />
-          <Property Name="img" Type="varchar" MaxLength="99" />
+          <Property Name="img" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="orders">
           <Key>
@@ -44,7 +44,7 @@
           <Property Name="custId" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="orderid" Type="int" Nullable="false" />
           <Property Name="dishname" Type="varchar" MaxLength="20" />
-          <Property Name="price" Type="varchar" MaxLength="20" />
+          <Property Name="price" Type="float" />
           <Property Name="quantity" Type="int" />
         </EntityType>
         <EntityType Name="registration">
@@ -263,7 +263,7 @@
           <Property Name="vtype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="cuisinetype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="price" Type="Double" />
-          <Property Name="img" Type="String" MaxLength="99" FixedLength="false" Unicode="false" />
+          <Property Name="img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="restaurant" Relationship="Self.resturantid_fk" FromRole="Menu" ToRole="restaurant" />
         </EntityType>
         <EntityType Name="order">
@@ -274,7 +274,7 @@
           <Property Name="custId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="orderid" Type="Int32" Nullable="false" />
           <Property Name="dishname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="price" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Double" />
           <Property Name="quantity" Type="Int32" />
           <NavigationProperty Name="Customer" Relationship="Self.customer_fk" FromRole="orders" ToRole="Customer" />
         </EntityType>
