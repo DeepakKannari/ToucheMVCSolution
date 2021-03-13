@@ -12,7 +12,7 @@ namespace ToucheMVCProject.Controllers
         toucheEntities dbContext = new toucheEntities();
         static string custId;
         static int orderId;
-        List<order> sessionOrders = new List<order>();
+        static List<order> sessionOrders = new List<order>();
 
         // GET: Customer
         public ActionResult Index()
@@ -132,7 +132,9 @@ namespace ToucheMVCProject.Controllers
                 totalBill +=  Convert.ToDouble(item.price * item.quantity);
                 totalQuantity += Convert.ToInt32(item.quantity);
             }
-            return View();
+            ViewBag.totalBill = totalBill;
+            ViewBag.totalQuantity = totalQuantity;
+            return View(sessionOrders);
         }
 
         public JsonResult isSeatAvailable(int seats,int id,string timeslot)
