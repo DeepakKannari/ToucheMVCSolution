@@ -5,15 +5,16 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>addMenuItems</h2>
+<h2 style="text-align:center">Add MenuItem</h2>
 
 
+<div class="form-container">
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Menu</h4>
+    @*<h4>Menu</h4>*@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @*<div class="form-group">
@@ -24,7 +25,7 @@
             </div>
         </div>*@
     <div class="form-group">
-        @Html.LabelFor(model => model.restaurantId, null, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.restaurantId, null, htmlAttributes: new { @class = "control-label col-md-2" })*@
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.restaurantId, new SelectList(ViewBag.ids, "Value", "Text"), "Restaurant Id", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.restaurantId, "", new { @class = "text-danger" })
@@ -33,7 +34,7 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.menuItemId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.menuItemId, htmlAttributes: new { @class = "control-label col-md-2" })*@
         <div class="col-md-10">
             @Html.EditorFor(model => model.menuItemId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Menu-Item Id" } })
             @Html.ValidationMessageFor(model => model.menuItemId, "", new { @class = "text-danger" })
@@ -41,7 +42,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.dishName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.dishName, htmlAttributes: new { @class = "control-label col-md-2" })*@
         <div class="col-md-10">
             @Html.EditorFor(model => model.dishName, new { htmlAttributes = new { @class = "form-control", @placeholder = " Dish Name" } })
             @Html.ValidationMessageFor(model => model.dishName, "", new { @class = "text-danger" })
@@ -49,7 +50,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })*@
         <div class="col-md-10">
             @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control", @placeholder = " Description" } })
             @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
@@ -64,7 +65,7 @@
             </div>
         </div>*@
     <div class="form-group">
-        @Html.LabelFor(model => model.vtype, null, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.vtype, null, htmlAttributes: new { @class = "control-label col-md-2" })*@
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.vtype, new SelectList(ViewBag.type, "Value", "Text"), "Veg/NON-Veg", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.vtype, "", new { @class = "text-danger" })
@@ -72,7 +73,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.cuisinetype, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.cuisinetype, htmlAttributes: new { @class = "control-label col-md-2" })*@
         <div class="col-md-10">
             @Html.EditorFor(model => model.cuisinetype, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cuisine Type" } })
             @Html.ValidationMessageFor(model => model.cuisinetype, "", new { @class = "text-danger" })
@@ -80,7 +81,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.price, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.price, htmlAttributes: new { @class = "control-label col-md-2" })*@
         <div class="col-md-10">
             @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Price" } })
             @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
@@ -88,7 +89,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.img, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.img, htmlAttributes: new { @class = "control-label col-md-2" })*@
         <div class="col-md-10">
             @Html.EditorFor(model => model.img, new { htmlAttributes = new { @class = "form-control", @placeholder = "Image Url" } })
             @Html.ValidationMessageFor(model => model.img, "", new { @class = "text-danger" })
@@ -103,6 +104,7 @@
     </div>
 </div>
 }
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")

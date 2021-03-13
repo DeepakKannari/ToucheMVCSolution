@@ -21,6 +21,18 @@ namespace ToucheMVCProject.Controllers
             return View(dbContext.restaurants.ToList());
         }
 
+        public ActionResult searchform()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult orderLocationform(FormCollection formvalues)
+        {
+            return RedirectToAction("SearchFoodByLocation",new{location=formvalues[0]});
+        }
+
         public ActionResult SearchFoodByLocation(string location)
         {
             //var joinresult = dbContext.bugs.Join(dbContext.project_modules,
@@ -33,7 +45,7 @@ namespace ToucheMVCProject.Controllers
                 m => m.restaurantId,
                 (r, m) => new { r.id,r.city,r.status, m.menuItemId, m.dishName, m.description, m.vtype, m.cuisinetype, m.price });
             var result = joinedTable.Where(s=>s.city.Equals(location) && s.status.Equals("open")).Select(m=> new { rid=m.id,menuitemId=m.menuItemId,dishname=m.dishName,description=m.description,vtype=m.vtype,cuisinetype=m.cuisinetype,price=m.price});
-            List<Menu> bugtable = new List<Menu>();
+            List<Menu> menuTable = new List<Menu>();
             
             foreach (var item in result)
             {
@@ -45,25 +57,25 @@ namespace ToucheMVCProject.Controllers
                 mentuple.cuisinetype = item.cuisinetype;
                 mentuple.price = item.price;
             }
-            return View(dbContext.restaurants.ToList());
+            return View(menuTable);
         }
         [HttpPost]
         public ActionResult orderLocation(FormCollection formvalues)
         {
             return RedirectToAction("SearchFoodByLocation", new { location = formvalues[0] });
         }
-        public ActionResult filtredMenuView(string location)
-        {
-            var result = dbContext.Where(s => s.city.Equals(location));
-            return View(result);
+        //public ActionResult filtredMenuView(string location)
+        //{
+        //    var result = dbContext.Where(s => s.city.Equals(location));
+        //    return View(result);
 
-        }
+        //}
 
 
         [HttpPost]
         public ActionResult dropdown(FormCollection formvalues) 
         {
-            return RedirectToAction("filtredView", new { location = formvalues[0]});
+            return RedirectToAction("filtredRestaurantsView", new { location = formvalues[0]});
         }
 
         public ActionResult filtredRestaurantsView(string location)
@@ -87,7 +99,7 @@ namespace ToucheMVCProject.Controllers
             return Json(!result,JsonRequestBehavior.AllowGet);
         }
 
-        public  orderfood()
+       
 
     }
 }

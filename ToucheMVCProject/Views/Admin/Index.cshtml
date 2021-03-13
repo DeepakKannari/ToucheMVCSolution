@@ -6,12 +6,12 @@
     
 }
 @*<link href="~/Content/listStylesheet.css" rel="stylesheet" />*@
-<h2>Index</h2>
+<h2 style="text-align:center;">Resturants</h2>
 
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-<table class="table">
+<!--<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.name)
@@ -30,34 +30,36 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.closetime)
-        </th>
+        </th>-->
         @*<th>
             @Html.DisplayNameFor(model => model.state)
         </th>*@
-        <th>
+        <!--<th>
             @Html.DisplayNameFor(model => model.city)
         </th>
-@*<th>
-        @Html.DisplayNameFor(model => model.reservation.customerId)
-    </th>*@
-<th></th>
-</tr>
 
-@*<div class="">*@
+<th></th>
+</tr>-->
+<div class="gallery-container">
     @foreach (var item in Model)
     {
-        @*<div class="gallery">
-            <a target="_blank" href="http://localhost:60136/Admin/viewMenu">
-                <img src="https://www.w3schools.com/css/img_5terre.jpg" alt="Cinque Terre" width="600" height="400">
-            </a>
-            <div class="desc">
-                <ul>
-                    <li> @Html.DisplayFor(modelItem => item.name) </li>
-                    <li> @Html.DisplayFor(modelItem => item.status)</li>
-                    <li> @Html.DisplayFor(modelItem => item.state)</li>
-            </div>
-        </div>*@
-        <tr>
+    <div class="gallery">
+        <a target="_blank" href="">
+        <img src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Cinque Terre" width="600" height="400">
+        </a>
+        <div class="desc">
+            <h3 style="margin-top:0;">@item.name</h3>
+            <p> @item.address</p>
+            <p>@item.status</p>
+            <ul style="padding-left:0;">
+                <li>@Html.ActionLink("Reservation", "addReservationinfo", new { id = item.id }) |</li>
+                <li>@Html.ActionLink("Status", "EditValues", new { id = item.id }) |</li>
+                <li>@Html.ActionLink("Menu", "viewMenu", new { id = item.id })</li>
+            </ul>
+        </div>
+     </div>
+   
+        <!--<tr>
             <td>
                 @Html.DisplayFor(modelItem => item.name)
             </td>
@@ -75,23 +77,24 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.closetime)
-            </td>
+            </td>-->
             @*<td>
                 @Html.DisplayFor(modelItem => item.state)
             </td>*@
-            <td>
+            <!--<td>
                 @Html.DisplayFor(modelItem => item.city)
-            </td>
+            </td>-->
         @*<td>
                 @Html.DisplayFor(modelItem => item.reservation.customerId)
             </td>*@
-        <td>
+        <!--<td>
                 @Html.ActionLink("Add reservation info", "addReservationinfo", new { id=item.id }) |
                 @Html.ActionLink("Edit Status", "EditValues", new { id=item.id }) |
                 @Html.ActionLink("Menu", "viewMenu", new { id=item.id })
             </td>
-        </tr>
+        </tr>-->
     }
-    @*</divc>*@
+    </div>
+  
 
-    </table>
+    @*</table>*@

@@ -10,7 +10,7 @@
 <p>
     @Html.ActionLink("Add new menuitem", "addMenuItems")
 </p>
-<table class="table">
+<!--<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.dishName)
@@ -26,45 +26,63 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.price)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.img)
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.restaurant.name)
-        </th>*@
-        <th></th>
-    </tr>
+        </th>-->
+@*<th>
+        @Html.DisplayNameFor(model => model.img)
+    </th>*@
+@*<th>
+        @Html.DisplayNameFor(model => model.restaurant.name)
+    </th>*@
+<!--<th></th>
+</tr>-->
+<div class="gallery-container">
+    @foreach (var item in Model)
+    {
+        <div class="gallery">
+            <a target="_blank" href="img_5terre.jpg">
+                <img src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">
+                <h3>
+                    @item.dishName<h4>
+                        <p> @item.vtype</p>
+                        <p>@item.price</p>
+                        @*<ul>
+                                <li>@Html.ActionLink("Add reservation info", "addReservationinfo", new { id = item.id }) |</li>
+                                <li>@Html.ActionLink("Edit Status", "EditValues", new { id = item.id }) |</li>
+                                <li>@Html.ActionLink("Menu", "viewMenu", new { id = item.id })</li>
+                            </ul>*@
+            </div>
+        </div>
+        <!--<tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.dishName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.vtype)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cuisinetype)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>-->
+        @*<td>
+                @Html.DisplayFor(modelItem => item.img)
+            </td>*@
+        @*<td>
+                @Html.DisplayFor(modelItem => item.restaurant.name)
+            </td*@<!-->-->
+        @*<td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>*@
+        <!--</tr>-->
+    }
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.dishName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.vtype)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cuisinetype)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.price)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.img)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.restaurant.name)
-        </td*@>
-        @*<td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>*@
-    </tr>
-}
-
-</table>
+    @*</table>*@
