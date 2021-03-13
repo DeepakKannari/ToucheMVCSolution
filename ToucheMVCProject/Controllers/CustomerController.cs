@@ -180,23 +180,23 @@ namespace ToucheMVCProject.Controllers
             }
             
         }
-
+        // reserve table  
         public ActionResult ReserverTable()
         {
             try
             {
-                if (TempData.ContainsKey("custId"))
-                {
+                //if (TempData.ContainsKey("custId"))
+                //{
                     reservationViewModel reservationView = new reservationViewModel();
                      ViewBag.timeSlots = reservationView.timeSlots;
 
                      return View();
-                }
-                else
-                {
-                    custId = null;
-                    return RedirectToAction("LogIn", "LogIn");
-                }
+                //}
+                //else
+                //{
+                //    custId = null;
+                //    return RedirectToAction("LogIn", "LogIn");
+                //}
             }
             catch(Exception ex)
             {
@@ -424,10 +424,10 @@ namespace ToucheMVCProject.Controllers
 
         }
 
-        public JsonResult isSeatAvailable(int seats,int id,string timeslot)
+        public JsonResult isSeatAvailable(int noOfPeople, int restaurantId, string timeslot)
         {
-            var result = dbContext.reservationInfoes.Where(s=>s.resturantId.Equals(id)&& s.Timeslot.Equals(timeslot)).Any(s => s.availableSeats > seats);
-            return Json(!result,JsonRequestBehavior.AllowGet);
+            var result = dbContext.reservationInfoes.Where(s=>s.resturantId.Equals(restaurantId) && s.Timeslot.Equals(timeslot)).Any(s => s.availableSeats >= noOfPeople);
+            return Json(result,JsonRequestBehavior.AllowGet);
         }
 
        

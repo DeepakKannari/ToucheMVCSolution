@@ -246,7 +246,6 @@
     <Content Include="Views\Shared\CustomerLayout.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\filtredView.cshtml" />
-    <Content Include="Views\Customer\ReserverTable.cshtml" />
     <Content Include="Views\Customer\SearchFoodByLocation.cshtml" />
     <Content Include="Views\Customer\searchform.cshtml" />
     <Content Include="Views\Customer\filtredRestaurantsView.cshtml" />
@@ -255,6 +254,7 @@
     <Content Include="Views\Customer\filterbyVeg.cshtml" />
     <Content Include="Views\Customer\filterbyNonVeg.cshtml" />
     <Content Include="Views\Customer\filterbyPrice.cshtml" />
+    <Content Include="Views\Customer\ReserverTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

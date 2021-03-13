@@ -23,7 +23,7 @@ namespace ToucheMVCProject.Models
         public string timeslot { get; set; }
         [Required]
         //[Display(Name = "No. of people")]
-        [RemoteAttribute("isSeatAvailable", "Customer",AdditionalFields = "restaurantId,timeslot", ErrorMessage ="that many seats are not available")]
+        [Remote("isSeatAvailable", "Customer", AdditionalFields = "restaurantId,timeslot", ErrorMessage ="that many seats are not available")]
         public Nullable<int> noOfPeople { get; set; }
 
         public List<SelectListItem> timeSlots = new List<SelectListItem>()
