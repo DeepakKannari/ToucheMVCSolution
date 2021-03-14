@@ -255,6 +255,7 @@
     <Content Include="Views\Customer\filterbyNonVeg.cshtml" />
     <Content Include="Views\Customer\filterbyPrice.cshtml" />
     <Content Include="Views\Customer\ReserverTable.cshtml" />
+    <Content Include="Views\Customer\viewReservations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

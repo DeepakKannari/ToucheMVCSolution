@@ -33,7 +33,7 @@ namespace ToucheMVCProject.Controllers
                 dbContext.SaveChanges();
                 return RedirectToAction("index");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.exception = ex.Message;
             }
@@ -54,7 +54,7 @@ namespace ToucheMVCProject.Controllers
                 reservationInfo reservationInfoTuple = formValues.getReservationInfoValues();
                 dbContext.reservationInfoes.Add(reservationInfoTuple);
                 dbContext.SaveChanges();
-             
+
                 return RedirectToAction("index");
             }
             catch (Exception ex)
@@ -62,7 +62,7 @@ namespace ToucheMVCProject.Controllers
                 ViewBag.exception = ex.Message;
                 return View();
             }
-            
+
 
         }
 
@@ -73,9 +73,9 @@ namespace ToucheMVCProject.Controllers
 
         public ActionResult viewMenu(int id)
         {
-            
-            var result = dbContext.Menus.Where(s=>s.restaurantId.Equals(id));
-            
+
+            var result = dbContext.Menus.Where(s => s.restaurantId.Equals(id));
+
             return View(result);
         }
 
@@ -104,9 +104,9 @@ namespace ToucheMVCProject.Controllers
             }
         }
 
-        public ActionResult EditValues( int id)
+        public ActionResult EditValues(int id)
         {
-            var result = dbContext.restaurants.SingleOrDefault(s=>s.id.Equals(id));
+            var result = dbContext.restaurants.SingleOrDefault(s => s.id.Equals(id));
 
             if (result.status == "open")
             {
@@ -119,6 +119,16 @@ namespace ToucheMVCProject.Controllers
                 dbContext.SaveChanges();
             }
             return RedirectToAction("index");
+        }
+
+        public ActionResult viewReservation()
+        {
+            var reservationTable = dbContext.reservations.Select(s => s);
+            return View(reservationTable);
+        }
+        public ActionResult clearReservation()
+        {
+            return View();
         }
 
 

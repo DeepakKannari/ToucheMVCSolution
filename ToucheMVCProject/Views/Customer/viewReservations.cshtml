@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ToucheMVCProject.Models.reservationViewModel>
+
+@{
+    ViewBag.Title = "viewReservations";
+    Layout = "~/Views/Shared/CustomerLayout.cshtml";
+}
+
+<h2>viewReservations</h2>
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.noOfPeople)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.restaurantName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.timeslot)
+        </th>
+              
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.noOfPeople)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurantName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.timeslot)
+            </td>
+            
+        </tr>
+    }
+
+</table>

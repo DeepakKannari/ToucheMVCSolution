@@ -28,6 +28,8 @@ namespace ToucheMVCProject.Models
         [Remote("isSeatAvailable", "Customer", AdditionalFields = "restaurantId,timeslot", ErrorMessage ="that many seats are not available")]
         public Nullable<int> noOfPeople { get; set; }
 
+        public string restaurantName { get; set; }
+
         public List<SelectListItem> timeSlots = new List<SelectListItem>();
         //{
         //    new SelectListItem() { Text="9:30-12:30",Value="9:30-12:30"},
