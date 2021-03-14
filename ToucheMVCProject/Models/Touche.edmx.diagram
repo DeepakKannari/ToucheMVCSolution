@@ -20,6 +20,11 @@
         <AssociationConnector Association="toucheModel.resturantid_fk" ManuallyRouted="false" />
         <AssociationConnector Association="toucheModel.restaurantId_cust_reserv_fk" ManuallyRouted="false" />
         <AssociationConnector Association="toucheModel.resturantId_reserve_fk" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="toucheModel.clearedreservation" Width="1.5" PointX="8.25" PointY="2.75" />
+        <EntityTypeShape EntityType="toucheModel.delivered" Width="1.5" PointX="5.25" PointY="10.5" />
+        <AssociationConnector Association="toucheModel.clearedreservation_customerid_reserv_fk" />
+        <AssociationConnector Association="toucheModel.clearedreservation_restaurantId_cust_reserv_fk" />
+        <AssociationConnector Association="toucheModel.delivered_customer_fk" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -123,11 +123,60 @@ namespace ToucheMVCProject.Controllers
 
         public ActionResult viewReservation()
         {
-            var reservationTable = dbContext.reservations.Select(s => s);
-            return View(reservationTable);
+            var joinedTable = dbContext.reservations.Join(dbContext.restaurants,
+                re => re.restaurantId,
+                r => r.id,
+                (re, r) => new { restaurantname = r.name, id = re.Id, noofpeople = re.noOfPeople, customerid = re.customerId, restaurantid = re.restaurantId, timeslot = re.timeslot });
+            var result = joinedTable.Select(s => s);
+            List<reservationViewModel> reservations = new List<reservationViewModel>();
+            foreach (var item in result)
+            {
+                reservationViewModel reservation = new reservationViewModel();
+                reservation.Id = item.id;
+                reservation.noOfPeople = item.noofpeople;
+                reservation.restaurantId = item.restaurantid;
+                reservation.restaurantName = item.restaurantname;
+                reservation.timeslot = item.timeslot;
+                reservation.customerId = item.customerid;
+
+                reservations.Add(reservation);
+            }
+            return View(reservations);
+            //var reservationTable = dbContext.reservations.Select(s => s);
+            //return View(reservationTable);
         }
-        public ActionResult clearReservation()
+        public ActionResult clearReservation(int id)
         {
+            var reservationTuple = dbContext.reservations.SingleOrDefault(s=>s.Id.Equals(id));
+            clearedreservation clearReservation = new clearedreservation();
+            int restaurantId;
+            
+
+
+            if (reservationTuple != null)
+            {
+                clearReservation.Id = reservationTuple.Id;
+                clearReservation.restaurantId = reservationTuple.restaurantId;
+                clearReservation.noOfPeople = reservationTuple.noOfPeople;
+                clearReservation.timeslot = reservationTuple.timeslot;
+                clearReservation.customerId = reservationTuple.customerId;
+                restaurantId= Convert.ToInt32(reservationTuple.restaurantId);
+                
+                dbContext.clearedreservations.Add(clearReservation);
+                dbContext.SaveChanges();
+                var reservationInfo = dbContext.reservationInfoes.SingleOrDefault(s => s.resturantId.Equals(restaurantId) && s.Timeslot.Equals(reservationTuple.timeslot));
+                if (reservationInfo != null)
+                {
+                    reservationInfo.availableSeats+= reservationTuple.noOfPeople;
+                    dbContext.SaveChanges();
+                }
+
+                dbContext.reservations.Remove(reservationTuple);
+                dbContext.SaveChanges();
+
+                return RedirectToAction("viewReservation");
+            }
+
             return View();
         }
 

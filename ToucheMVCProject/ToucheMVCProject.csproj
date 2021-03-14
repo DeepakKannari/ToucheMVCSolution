@@ -138,7 +138,13 @@
     <Compile Include="Models\address.cs">
       <DependentUpon>Touche.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\clearedreservation.cs">
+      <DependentUpon>Touche.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Customer.cs">
+      <DependentUpon>Touche.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\delivered.cs">
       <DependentUpon>Touche.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Menu.cs">
@@ -256,6 +262,7 @@
     <Content Include="Views\Customer\filterbyPrice.cshtml" />
     <Content Include="Views\Customer\ReserverTable.cshtml" />
     <Content Include="Views\Customer\viewReservations.cshtml" />
+    <Content Include="Views\Admin\viewReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

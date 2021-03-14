@@ -13,6 +13,16 @@
           <Property Name="custId" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="deliveraddress" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="clearedreservation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="customerId" Type="varchar" MaxLength="20" />
+          <Property Name="restaurantId" Type="int" />
+          <Property Name="noOfPeople" Type="int" />
+          <Property Name="timeslot" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="custId" />
@@ -20,7 +30,17 @@
           <Property Name="custId" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="20" />
           <Property Name="phoneNo" Type="varchar" MaxLength="10" />
-          <Property Name="img" Type="varchar" MaxLength="99" />
+        </EntityType>
+        <EntityType Name="delivered">
+          <Key>
+            <PropertyRef Name="custid" />
+            <PropertyRef Name="orderId" />
+          </Key>
+          <Property Name="custid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="orderId" Type="int" Nullable="false" />
+          <Property Name="dishname" Type="varchar" MaxLength="20" />
+          <Property Name="price" Type="varchar" MaxLength="20" />
+          <Property Name="quantity" Type="int" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -89,6 +109,34 @@
           <Property Name="closetime" Type="time" Precision="7" />
           <Property Name="city" Type="varchar" MaxLength="20" />
         </EntityType>
+        <Association Name="clearedreservation_customerid_reserv_fk">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="clearedreservation" Type="Self.clearedreservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="clearedreservation">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="clearedreservation_restaurantId_cust_reserv_fk">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="clearedreservation" Type="Self.clearedreservation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clearedreservation">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="customer_fk">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -128,6 +176,20 @@
             </Principal>
             <Dependent Role="reservation">
               <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="delivered_customer_fk">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="delivered" Type="Self.delivered" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="delivered">
+              <PropertyRef Name="custid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -189,13 +251,23 @@
         </Association>
         <EntityContainer Name="toucheModelStoreContainer">
           <EntitySet Name="address" EntityType="Self.address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="clearedreservation" EntityType="Self.clearedreservation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="delivered" EntityType="Self.delivered" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="registration" EntityType="Self.registration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reservation" EntityType="Self.reservation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reservationInfo" EntityType="Self.reservationInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="restaurant" EntityType="Self.restaurant" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="clearedreservation_customerid_reserv_fk" Association="Self.clearedreservation_customerid_reserv_fk">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="clearedreservation" EntitySet="clearedreservation" />
+          </AssociationSet>
+          <AssociationSet Name="clearedreservation_restaurantId_cust_reserv_fk" Association="Self.clearedreservation_restaurantId_cust_reserv_fk">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="clearedreservation" EntitySet="clearedreservation" />
+          </AssociationSet>
           <AssociationSet Name="customer_fk" Association="Self.customer_fk">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="orders" EntitySet="orders" />
@@ -207,6 +279,10 @@
           <AssociationSet Name="customerid_reserv_fk" Association="Self.customerid_reserv_fk">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="reservation" EntitySet="reservation" />
+          </AssociationSet>
+          <AssociationSet Name="delivered_customer_fk" Association="Self.delivered_customer_fk">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="delivered" EntitySet="delivered" />
           </AssociationSet>
           <AssociationSet Name="restaurantId_cust_reserv_fk" Association="Self.restaurantId_cust_reserv_fk">
             <End Role="restaurant" EntitySet="restaurant" />
@@ -245,11 +321,12 @@
           <Property Name="custId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="phoneNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="img" Type="String" MaxLength="99" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="addresses" Relationship="Self.customerId_fk" FromRole="Customer" ToRole="address" />
           <NavigationProperty Name="orders" Relationship="Self.customer_fk" FromRole="Customer" ToRole="orders" />
           <NavigationProperty Name="reservations" Relationship="Self.customerid_reserv_fk" FromRole="Customer" ToRole="reservation" />
           <NavigationProperty Name="registration" Relationship="Self.username_fk" FromRole="Customer" ToRole="registration" />
+          <NavigationProperty Name="clearedreservations" Relationship="toucheModel.clearedreservation_customerid_reserv_fk" FromRole="Customer" ToRole="clearedreservation" />
+          <NavigationProperty Name="delivereds" Relationship="toucheModel.delivered_customer_fk" FromRole="Customer" ToRole="delivered" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -326,6 +403,7 @@
           <NavigationProperty Name="Menus" Relationship="Self.resturantid_fk" FromRole="restaurant" ToRole="Menu" />
           <NavigationProperty Name="reservation" Relationship="Self.restaurantId_cust_reserv_fk" FromRole="restaurant" ToRole="reservation" />
           <NavigationProperty Name="reservationInfoes" Relationship="Self.resturantId_reserve_fk" FromRole="restaurant" ToRole="reservationInfo" />
+          <NavigationProperty Name="clearedreservation" Relationship="toucheModel.clearedreservation_restaurantId_cust_reserv_fk" FromRole="restaurant" ToRole="clearedreservation" />
         </EntityType>
         <Association Name="customerId_fk">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1">
@@ -462,7 +540,87 @@
             <End Role="restaurant" EntitySet="restaurants" />
             <End Role="reservationInfo" EntitySet="reservationInfoes" />
           </AssociationSet>
+          <EntitySet Name="clearedreservations" EntityType="toucheModel.clearedreservation" />
+          <EntitySet Name="delivereds" EntityType="toucheModel.delivered" />
+          <AssociationSet Name="clearedreservation_customerid_reserv_fk" Association="toucheModel.clearedreservation_customerid_reserv_fk">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="clearedreservation" EntitySet="clearedreservations" />
+          </AssociationSet>
+          <AssociationSet Name="clearedreservation_restaurantId_cust_reserv_fk" Association="toucheModel.clearedreservation_restaurantId_cust_reserv_fk">
+            <End Role="restaurant" EntitySet="restaurants" />
+            <End Role="clearedreservation" EntitySet="clearedreservations" />
+          </AssociationSet>
+          <AssociationSet Name="delivered_customer_fk" Association="toucheModel.delivered_customer_fk">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="delivered" EntitySet="delivereds" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="clearedreservation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="customerId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="restaurantId" Type="Int32" />
+          <Property Name="noOfPeople" Type="Int32" />
+          <Property Name="timeslot" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="toucheModel.clearedreservation_customerid_reserv_fk" FromRole="clearedreservation" ToRole="Customer" />
+          <NavigationProperty Name="restaurant" Relationship="toucheModel.clearedreservation_restaurantId_cust_reserv_fk" FromRole="clearedreservation" ToRole="restaurant" />
+        </EntityType>
+        <EntityType Name="delivered">
+          <Key>
+            <PropertyRef Name="custid" />
+            <PropertyRef Name="orderId" />
+          </Key>
+          <Property Name="custid" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="orderId" Type="Int32" Nullable="false" />
+          <Property Name="dishname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="toucheModel.delivered_customer_fk" FromRole="delivered" ToRole="Customer" />
+        </EntityType>
+        <Association Name="clearedreservation_customerid_reserv_fk">
+          <End Type="toucheModel.Customer" Role="Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="toucheModel.clearedreservation" Role="clearedreservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="clearedreservation">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="clearedreservation_restaurantId_cust_reserv_fk">
+          <End Type="toucheModel.restaurant" Role="restaurant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="toucheModel.clearedreservation" Role="clearedreservation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clearedreservation">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="delivered_customer_fk">
+          <End Type="toucheModel.Customer" Role="Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="toucheModel.delivered" Role="delivered" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="custId" />
+            </Principal>
+            <Dependent Role="delivered">
+              <PropertyRef Name="custid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -483,7 +641,6 @@
                 <ScalarProperty Name="custId" ColumnName="custId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="phoneNo" ColumnName="phoneNo" />
-                <ScalarProperty Name="img" ColumnName="img" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -554,6 +711,28 @@
                 <ScalarProperty Name="opentime" ColumnName="opentime" />
                 <ScalarProperty Name="closetime" ColumnName="closetime" />
                 <ScalarProperty Name="city" ColumnName="city" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clearedreservations">
+            <EntityTypeMapping TypeName="toucheModel.clearedreservation">
+              <MappingFragment StoreEntitySet="clearedreservation">
+                <ScalarProperty Name="timeslot" ColumnName="timeslot" />
+                <ScalarProperty Name="noOfPeople" ColumnName="noOfPeople" />
+                <ScalarProperty Name="restaurantId" ColumnName="restaurantId" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="delivereds">
+            <EntityTypeMapping TypeName="toucheModel.delivered">
+              <MappingFragment StoreEntitySet="delivered">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="dishname" ColumnName="dishname" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
+                <ScalarProperty Name="custid" ColumnName="custid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

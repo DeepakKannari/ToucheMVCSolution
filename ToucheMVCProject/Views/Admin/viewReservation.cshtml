@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ToucheMVCProject.Models.reservationViewModel>
+
+@{
+    ViewBag.Title = "viewReservation";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>viewReservation</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.customerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.restaurantId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.timeslot)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.noOfPeople)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.restaurantName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.customerId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.restaurantId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.timeslot)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.noOfPeople)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.restaurantName)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "clearReservation", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -18,5 +18,7 @@ namespace ToucheMVCProject.Models
         public string role { get; set; }
         [Required]
         public string phoneNo { get; set; }
+        [Required]
+        public string address { get; set; }
     }
 }

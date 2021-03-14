@@ -82,6 +82,7 @@ namespace ToucheMVCProject.Controllers
         {
             registration newUser = new registration();
             Customer newCustomer = new Customer();
+            address deliveryaddress = new address();
             newUser.userId = CustomerValues.userId;
             newUser.username = CustomerValues.username;
             newUser.password = CustomerValues.password;
@@ -93,6 +94,11 @@ namespace ToucheMVCProject.Controllers
             newCustomer.phoneNo = CustomerValues.phoneNo;
             dbContext.Customers.Add(newCustomer);
             dbContext.SaveChanges();
+            deliveryaddress.custId = CustomerValues.userId;
+            deliveryaddress.deliveraddress = CustomerValues.address;
+            dbContext.addresses.Add(deliveryaddress);
+            dbContext.SaveChanges();
+
 
             //dbContext.registrations.Add();
             return RedirectToAction("LogIn");

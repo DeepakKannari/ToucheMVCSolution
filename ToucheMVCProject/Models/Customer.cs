@@ -20,12 +20,13 @@ namespace ToucheMVCProject.Models
             this.addresses = new HashSet<address>();
             this.orders = new HashSet<order>();
             this.reservations = new HashSet<reservation>();
+            this.clearedreservations = new HashSet<clearedreservation>();
+            this.delivereds = new HashSet<delivered>();
         }
     
         public string custId { get; set; }
         public string name { get; set; }
         public string phoneNo { get; set; }
-        public string img { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<address> addresses { get; set; }
@@ -34,5 +35,9 @@ namespace ToucheMVCProject.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<reservation> reservations { get; set; }
         public virtual registration registration { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<clearedreservation> clearedreservations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<delivered> delivereds { get; set; }
     }
 }

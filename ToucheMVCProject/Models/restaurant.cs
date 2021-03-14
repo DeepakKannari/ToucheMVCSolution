@@ -35,5 +35,6 @@ namespace ToucheMVCProject.Models
         public virtual reservation reservation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<reservationInfo> reservationInfoes { get; set; }
+        public virtual clearedreservation clearedreservation { get; set; }
     }
 }
