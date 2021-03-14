@@ -40,10 +40,11 @@ namespace ToucheMVCProject.Controllers
             return View();
         }
 
-        public ActionResult addReservationinfo()
+        public ActionResult addReservationinfo(int id)
         {
             ReservationInfoViewModel ReservationInfoTuple = new ReservationInfoViewModel();
             ViewBag.timeSlot = ReservationInfoTuple.timeSlots;
+            ViewBag.restaurantId = id;
             return View();
         }
         [HttpPost]

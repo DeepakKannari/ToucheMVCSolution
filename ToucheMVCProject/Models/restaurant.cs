@@ -26,9 +26,8 @@ namespace ToucheMVCProject.Models
         public string address { get; set; }
         public string status { get; set; }
         public string category { get; set; }
-        public Nullable<System.TimeSpan> opentime { get; set; }
-        public Nullable<System.TimeSpan> closetime { get; set; }
         public string city { get; set; }
+        public string img { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menus { get; set; }

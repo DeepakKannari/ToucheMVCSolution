@@ -4,6 +4,7 @@
     justify-content: space-around;
     align-items: center;*/
     background-image: url("https://images.pexels.com/photos/1391487/pexels-photo-1391487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+    font-family: 'Dancing Script', cursive;
 }
 .body-content {
     background-color: #fffbf7;
@@ -87,4 +88,26 @@ footer {
 
 .options {
 font-size:5px;
+}
+
+.heading {
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    padding-bottom: 20px;
+}
+
+.table {
+    font-size: 20px;
+}
+
+th {
+    font-weight: 900;
+}
+
+.dish-name {
+    margin-top: 0;
+}
+
+.dish-description {
+    margin-top: 0;
 }

@@ -37,6 +37,9 @@ namespace ToucheMVCProject.Models
 
         public string selectedLocation { get; set; }
 
+        [Required]
+        public string img { get; set; }
+
         public List<SelectListItem> listOfStatus = new List<SelectListItem>()
         {
             new SelectListItem() { Text="Open",Value="open"},
@@ -63,9 +66,11 @@ namespace ToucheMVCProject.Models
             restaurantobj.address = this.address;
             restaurantobj.status = this.status;
             restaurantobj.category = this.category;
-            restaurantobj.opentime = this.opentime;
-            restaurantobj.closetime = this.closetime;
+            //restaurantobj.opentime = this.opentime;
+            //restaurantobj.closetime = this.closetime;
             restaurantobj.city = this.city;
+            restaurantobj.img = this.img;
+
 
             return restaurantobj;
         }

@@ -118,14 +118,7 @@ namespace ToucheMVCProject.Controllers
                 return View();
             }
         }
-
-
-        public ActionResult viewall()
-        {
-            return View();
-        }
-
-        [HttpPost]
+       [HttpPost]
         public ActionResult orderLocation(FormCollection formvalues)
         {
             if (TempData.ContainsKey("custId"))
@@ -140,13 +133,6 @@ namespace ToucheMVCProject.Controllers
                 return RedirectToAction("LogIn", "LogIn");
             }
         }
-        //public ActionResult filtredMenuView(string location)
-        //{
-        //    var result = dbContext.Where(s => s.city.Equals(location));
-        //    return View(result);
-
-        //}
-
         //dropdown- flters resturant by location
         [HttpPost]
         public ActionResult resturantsearchLocation(FormCollection formvalues) 
@@ -191,8 +177,8 @@ namespace ToucheMVCProject.Controllers
         {
             try
             {
-                //if (TempData.ContainsKey("custId"))
-                //{
+                if (TempData.ContainsKey("custId"))
+                {
                     reservationViewModel reservationView = new reservationViewModel();
                      ViewBag.timeSlots = reservationView.populateTimeSlot(id);
                 
@@ -200,12 +186,12 @@ namespace ToucheMVCProject.Controllers
                      ViewBag.restaurantId = id+"";
 
                      return View();
-                //}
-                //else
-                //{
-                //    custId = null;
-                //    return RedirectToAction("LogIn", "LogIn");
-                //}
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
             }
             catch(Exception ex)
             {
@@ -219,70 +205,96 @@ namespace ToucheMVCProject.Controllers
         {
             int lastReservationId;
             int restaurantId = Convert.ToInt32(formvalues.restaurantId);
-            //try
-            //{
-            if (dbContext.reservations.Any())
+            try
+            {
+                if (TempData.ContainsKey("custId"))
                 {
-                    lastReservationId = dbContext.reservations.Select(s => s.Id).Max();
-                }
-                else
-                {
-                    lastReservationId = 0;
-                }
-                reservationViewModel reservationView = new reservationViewModel();
-                //ViewBag.timeSlots = reservationView.populateTimeSlot(id);
-                reservation reservationTuple = new reservation();
-                reservationTuple.customerId = TempData.Peek("custId") as string;
-                reservationTuple.Id = ++lastReservationId;
-                reservationTuple.restaurantId = formvalues.restaurantId;
-                reservationTuple.noOfPeople = formvalues.noOfPeople;
-                reservationTuple.timeslot = formvalues.timeslot;
-                var result = dbContext.reservationInfoes.SingleOrDefault(s =>(s.resturantId.Equals(restaurantId)) && (s.Timeslot.Equals(reservationTuple.timeslot)));
-                if (result != null)
-                {
-                    result.availableSeats -= formvalues.noOfPeople;
-                    dbContext.SaveChanges();
-                    dbContext.reservations.Add(reservationTuple);
-                    dbContext.SaveChanges();
-                    return RedirectToAction("viewReservations");
-                }
-                else
-                {
-                    throw new Exception("No bookings available");
-                   
-                }    
+                    if (dbContext.reservations.Any())
+                    {
+                        lastReservationId = dbContext.reservations.Select(s => s.Id).Max();
+                    }
+                    else
+                    {
+                        lastReservationId = 0;
+                    }
+                    reservationViewModel reservationView = new reservationViewModel();
+                    //ViewBag.timeSlots = reservationView.populateTimeSlot(id);
+                    reservation reservationTuple = new reservation();
+                    reservationTuple.customerId = TempData.Peek("custId") as string;
+                    reservationTuple.Id = ++lastReservationId;
+                    reservationTuple.restaurantId = formvalues.restaurantId;
+                    reservationTuple.noOfPeople = formvalues.noOfPeople;
+                    reservationTuple.timeslot = formvalues.timeslot;
+                    var result = dbContext.reservationInfoes.SingleOrDefault(s => (s.resturantId.Equals(restaurantId)) && (s.Timeslot.Equals(reservationTuple.timeslot)));
+                    if (result != null)
+                    {
+                        result.availableSeats -= formvalues.noOfPeople;
+                        dbContext.SaveChanges();
+                        dbContext.reservations.Add(reservationTuple);
+                        dbContext.SaveChanges();
+                        return RedirectToAction("viewReservations");
+                    }
+                    else
+                    {
+                        throw new Exception("No bookings available");
 
+                    }
+                }
+                else 
+                {
+                    custId = null;
+                    RedirectToAction("LogIn", "LogIn");
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
                 
-                
-            //}
-            //catch (Exception ex)
-            //{
-            //    ViewBag.errorMessage = ex.Message;
-            //    return RedirectToAction("ReserverTable", new { id = formvalues.restaurantId });
-            //}
+            }
+            return RedirectToAction("ReserverTable", new { id = formvalues.restaurantId });
         }
 
         public ActionResult viewReservations()
         {
-            string custid = TempData.Peek("custId") as string;
-            var joinedTable = dbContext.reservations.Join(dbContext.restaurants,
-                re => re.restaurantId,
-                r => r.id,
-                (re,r)=> new { restaurantname=r.name,id=re.Id,noofpeople=re.noOfPeople,customerid=re.customerId,restaurantid=re.restaurantId,timeslot=re.timeslot});
-            var result = joinedTable.Where(s => s.customerid.Equals(custid));
-            List<reservationViewModel> reservations = new List<reservationViewModel>();
-            foreach (var item in result)
+            try
             {
-                reservationViewModel reservation = new reservationViewModel();
-                reservation.Id = item.id;
-                reservation.noOfPeople = item.noofpeople;
-                reservation.restaurantId = item.restaurantid;
-                reservation.restaurantName = item.restaurantname;
-                reservation.timeslot = item.timeslot;
-                reservation.customerId = custid;
-                reservations.Add(reservation);
+                if (TempData.ContainsKey("custId"))
+                {
+                    string custid = TempData.Peek("custId") as string;
+                    var joinedTable = dbContext.reservations.Join(dbContext.restaurants,
+                        re => re.restaurantId,
+                        r => r.id,
+                        (re, r) => new { restaurantname = r.name, id = re.Id, noofpeople = re.noOfPeople, customerid = re.customerId, restaurantid = re.restaurantId, timeslot = re.timeslot });
+                    var result = joinedTable.Where(s => s.customerid.Equals(custid));
+                    List<reservationViewModel> reservations = new List<reservationViewModel>();
+                    foreach (var item in result)
+                    {
+                        reservationViewModel reservation = new reservationViewModel();
+                        reservation.Id = item.id;
+                        reservation.noOfPeople = item.noofpeople;
+                        reservation.restaurantId = item.restaurantid;
+                        reservation.restaurantName = item.restaurantname;
+                        reservation.timeslot = item.timeslot;
+                        reservation.customerId = custid;
+                        reservations.Add(reservation);
+                    }
+                    return View(reservations);
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
             }
-            return View(reservations);
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+
+            }
         }
 
         [HttpPost]
@@ -349,8 +361,8 @@ namespace ToucheMVCProject.Controllers
 
         public ActionResult placeOrder()
         {
-            //try
-            //{
+            try
+            {
                 if (TempData.ContainsKey("custId"))
                 {
                     dbContext.orders.AddRange(sessionOrders);
@@ -364,12 +376,12 @@ namespace ToucheMVCProject.Controllers
                     custId = null;
                     return RedirectToAction("LogIn", "LogIn");
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    ViewBag.errorMessage = ex.Message;
-            //    return View();
-            //}
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
         }
 
         public ActionResult filterbyVeg()
@@ -506,8 +518,24 @@ namespace ToucheMVCProject.Controllers
 
         public ActionResult viewOrders()
         {
-            var orders = dbContext.orders.Where(s=>s.custId.Equals(custId));
-            return View(orders);
+            try
+            {
+                if (TempData.ContainsKey("custId"))
+                {
+                    var orders = dbContext.orders.Where(s => s.custId.Equals(custId));
+                    return View(orders);
+                }
+                else
+                {
+                    custId = null;
+                    return RedirectToAction("LogIn", "LogIn");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
         }
 
         public JsonResult isSeatAvailable(int noOfPeople, int restaurantId, string timeslot)

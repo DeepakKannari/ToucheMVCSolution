@@ -105,9 +105,8 @@
           <Property Name="address" Type="varchar" MaxLength="50" />
           <Property Name="status" Type="varchar" MaxLength="20" />
           <Property Name="category" Type="varchar" MaxLength="20" />
-          <Property Name="opentime" Type="time" Precision="7" />
-          <Property Name="closetime" Type="time" Precision="7" />
           <Property Name="city" Type="varchar" MaxLength="20" />
+          <Property Name="img" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="clearedreservation_customerid_reserv_fk">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
@@ -397,13 +396,12 @@
           <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="opentime" Type="Time" Precision="7" />
-          <Property Name="closetime" Type="Time" Precision="7" />
           <Property Name="city" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Menus" Relationship="Self.resturantid_fk" FromRole="restaurant" ToRole="Menu" />
           <NavigationProperty Name="reservation" Relationship="Self.restaurantId_cust_reserv_fk" FromRole="restaurant" ToRole="reservation" />
           <NavigationProperty Name="reservationInfoes" Relationship="Self.resturantId_reserve_fk" FromRole="restaurant" ToRole="reservationInfo" />
           <NavigationProperty Name="clearedreservation" Relationship="toucheModel.clearedreservation_restaurantId_cust_reserv_fk" FromRole="restaurant" ToRole="clearedreservation" />
+          <Property Name="img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="customerId_fk">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1">
@@ -703,13 +701,12 @@
           <EntitySetMapping Name="restaurants">
             <EntityTypeMapping TypeName="toucheModel.restaurant">
               <MappingFragment StoreEntitySet="restaurant">
+                <ScalarProperty Name="img" ColumnName="img" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="category" ColumnName="category" />
-                <ScalarProperty Name="opentime" ColumnName="opentime" />
-                <ScalarProperty Name="closetime" ColumnName="closetime" />
                 <ScalarProperty Name="city" ColumnName="city" />
               </MappingFragment>
             </EntityTypeMapping>
