@@ -31,15 +31,16 @@
         <div class="form-group">
             @Html.LabelFor(model => model.restaurantId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.restaurantId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.restaurantId, new { htmlAttributes = new { @class = "form-control", @Value=ViewBag.restaurantId } })
+                @*<input class="form-control" id="restaurantId" type="number" value=@ViewBag.restaurantId readonly />*@
                 @Html.ValidationMessageFor(model => model.restaurantId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.timeslot, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.timeslot, null, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.timeslot, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.timeslot, new SelectList(ViewBag.timeSlots, "Value", "Text"), "Time-Slot", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.timeslot, "", new { @class = "text-danger" })
             </div>
         </div>

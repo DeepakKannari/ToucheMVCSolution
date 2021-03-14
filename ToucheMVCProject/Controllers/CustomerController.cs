@@ -181,14 +181,17 @@ namespace ToucheMVCProject.Controllers
             
         }
         // reserve table  
-        public ActionResult ReserverTable()
+        public ActionResult ReserverTable(int id)
         {
             try
             {
                 //if (TempData.ContainsKey("custId"))
                 //{
                     reservationViewModel reservationView = new reservationViewModel();
-                     ViewBag.timeSlots = reservationView.timeSlots;
+                     ViewBag.timeSlots = reservationView.populateTimeSlot(id);
+                
+                     //reservationView.restaurantId = id;
+                     ViewBag.restaurantId = id+"";
 
                      return View();
                 //}
@@ -199,6 +202,44 @@ namespace ToucheMVCProject.Controllers
                 //}
             }
             catch(Exception ex)
+            {
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ReserverTable(reservationViewModel formvalues)
+        {
+            int lastReservationId;
+            try
+            {
+                if (dbContext.reservations.Any())
+                {
+                    lastReservationId = dbContext.reservations.Select(s => s.Id).Max();
+                }
+                else
+                {
+                    lastReservationId = 0;
+                }
+                reservationViewModel reservationView = new reservationViewModel();
+                //ViewBag.timeSlots = reservationView.populateTimeSlot(id);
+                reservation reservationTuple = new reservation();
+                reservationTuple.customerId = TempData.Peek("custId") as string;
+                reservationTuple.Id = ++lastReservationId;
+                reservationTuple.restaurantId = formvalues.restaurantId;
+                reservationTuple.noOfPeople = formvalues.noOfPeople;
+                reservationTuple.timeslot = formvalues.timeslot;
+                var result = dbContext.reservationInfoes.SingleOrDefault(s=>s.resturantId.Equals(formvalues.restaurantId)&&s.Timeslot.Equals(formvalues.timeslot));
+                if (result != null)
+                {
+                    
+                }
+
+                return View();
+                
+            }
+            catch (Exception ex)
             {
                 ViewBag.errorMessage = ex.Message;
                 return View();
