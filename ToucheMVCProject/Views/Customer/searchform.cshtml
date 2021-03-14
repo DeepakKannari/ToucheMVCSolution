@@ -4,10 +4,12 @@
     Layout = "~/Views/Shared/CustomerLayout.cshtml";
 }
 
-<h2>searchform</h2>
-<form action="/Customer/orderLocationform" method="post" novalidate="novalidate">
-    <input id="searchlocation" name="searchlocation" type="text" />
-    <input type="submit" value="Search">
+<h1 class="search-heading">Order food now</h1>
+<div class="form-container">
+<form action="/Customer/orderLocationform" class="search-form"method="post" novalidate="novalidate">
+    <input id="searchlocation" name="searchlocation" class="form-control search-bar"type="text" />
+    <input type="submit" class="search-button"value="Search">
 </form>
+ </div>
 
 

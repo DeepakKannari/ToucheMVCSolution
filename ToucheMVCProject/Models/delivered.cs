@@ -17,7 +17,7 @@ namespace ToucheMVCProject.Models
         public string custid { get; set; }
         public int orderId { get; set; }
         public string dishname { get; set; }
-        public string price { get; set; }
+        public Nullable<double> price { get; set; }
         public Nullable<int> quantity { get; set; }
     
         public virtual Customer Customer { get; set; }

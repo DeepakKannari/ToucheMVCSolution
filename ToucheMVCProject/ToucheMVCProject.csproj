@@ -192,6 +192,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Customer.css" />
     <Content Include="Content\layput.css" />
     <Content Include="Content\listStylesheet.css" />
     <Content Include="favicon.ico" />
@@ -263,6 +264,7 @@
     <Content Include="Views\Customer\ReserverTable.cshtml" />
     <Content Include="Views\Customer\viewReservations.cshtml" />
     <Content Include="Views\Admin\viewReservation.cshtml" />
+    <Content Include="Views\Admin\viewOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

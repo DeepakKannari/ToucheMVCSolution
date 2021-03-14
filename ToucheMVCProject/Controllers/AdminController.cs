@@ -180,6 +180,32 @@ namespace ToucheMVCProject.Controllers
             return View();
         }
 
+        public ActionResult viewOrders()
+        {
+            var result = dbContext.orders.Select(s=>s);
+
+            return View(result);
+        }
+        public ActionResult clearOrder(string customerid, int orderid)
+        {
+            var ordertuple = dbContext.orders.SingleOrDefault(s => s.orderid.Equals(orderid) && s.custId.Equals(customerid));
+            delivered deliveredtuple = new delivered();
+            if (ordertuple != null)
+            {
+                deliveredtuple.custid = ordertuple.custId;
+                deliveredtuple.orderId = ordertuple.orderid;
+                deliveredtuple.dishname = ordertuple.dishname;
+                deliveredtuple.price = ordertuple.price;
+                deliveredtuple.quantity = ordertuple.quantity;
+
+                dbContext.delivereds.Add(deliveredtuple);
+                dbContext.orders.Remove(ordertuple);
+                dbContext.SaveChanges();
+                return RedirectToAction("viewOrders");
+            }
+            return View();
+        }
+
 
     }
 }

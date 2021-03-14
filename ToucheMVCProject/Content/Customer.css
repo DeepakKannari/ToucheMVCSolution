@@ -4,7 +4,9 @@
     justify-content: space-around;
     align-items: center;*/
     background-image: url("https://images.pexels.com/photos/1391487/pexels-photo-1391487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+    font-family: 'Dancing Script', cursive;
 }
+
 .body-content {
     background-color: #fffbf7;
 }
@@ -15,14 +17,16 @@
     align-items: center;
     flex-wrap: wrap
 }
+
 .gallery-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    align-content:space-around;
+    align-content: space-around;
     /*background-color: #fffbf7;*/
 }
+
 div.gallery {
     margin: 30px;
     border: 1px solid #ccc;
@@ -76,7 +80,7 @@ li {
     }
 
 .brand {
-    font-size: 30px;
+    font-size: 40px;
     color: white;
 }
 
@@ -86,5 +90,51 @@ footer {
 }
 
 .options {
-font-size:5px;
+    font-size: 5px;
+}
+
+.search-form {
+    width: 400px;
+    padding-bottom: 70px;
+}
+
+.search-button {
+    display: inline-block;
+    background-color: white;
+    color: #cc202e;
+    padding: 5px;
+    width: 70px;
+    border-color: red;
+    border-radius: 5px;
+    margin:5px;
+}
+
+.search-bar {
+display:inline-block;
+}
+
+.search-heading {
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    padding-bottom: 70px;
+}
+
+.search-content {
+position: absolute;
+    top: 25%;
+    left: 4%;
+}
+
+.heading {
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    padding:10px;
+}
+
+.table {
+    font-size: 20px;
+}
+
+th {
+    font-weight:900;
 }
