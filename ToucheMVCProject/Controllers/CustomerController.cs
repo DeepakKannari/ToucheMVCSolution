@@ -77,15 +77,15 @@ namespace ToucheMVCProject.Controllers
         }
 
         //SearchFoodByLocation- Filter Food
-        //by location and display the table of menu items 
-        public ActionResult SearchFoodByLocation(/*string locatio*/)
+        //by location and display the table of menu items
+        public ActionResult SearchFoodByLocation()
         {
             string location = TempData.Peek("location") as string;
             try
             {
                 if (TempData.ContainsKey("custId"))
                 {
-                    //TempData["location"] = location;
+                    TempData["location"] = location;
                     var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
                     r => r.id,
                     m => m.restaurantId,
@@ -117,6 +117,12 @@ namespace ToucheMVCProject.Controllers
                 ViewBag.errorMessage = ex.Message;
                 return View();
             }
+        }
+
+
+        public ActionResult viewall()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -343,27 +349,27 @@ namespace ToucheMVCProject.Controllers
 
         public ActionResult placeOrder()
         {
-            try
-            {
+            //try
+            //{
                 if (TempData.ContainsKey("custId"))
                 {
                     dbContext.orders.AddRange(sessionOrders);
                     dbContext.SaveChanges();
                     //sessionOrders.Clear();
                     //ViewBag.ordermessage = "Your's Order has been placed";
-                    return RedirectToAction("ViewCart");
+                    return RedirectToAction("viewOrders");
                 }
                 else
                 {
                     custId = null;
                     return RedirectToAction("LogIn", "LogIn");
                 }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.errorMessage = ex.Message;
-                return View();
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    ViewBag.errorMessage = ex.Message;
+            //    return View();
+            //}
         }
 
         public ActionResult filterbyVeg()
@@ -496,6 +502,12 @@ namespace ToucheMVCProject.Controllers
 
 
 
+        }
+
+        public ActionResult viewOrders()
+        {
+            var orders = dbContext.orders.Where(s=>s.custId.Equals(custId));
+            return View(orders);
         }
 
         public JsonResult isSeatAvailable(int noOfPeople, int restaurantId, string timeslot)

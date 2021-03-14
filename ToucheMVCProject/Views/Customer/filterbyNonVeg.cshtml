@@ -7,74 +7,53 @@
 
 <h2>filterbyNonVeg</h2>
 
+
 <p>
     @Html.ActionLink("All", "SearchFoodByLocation")
     @Html.ActionLink("Veg", "filterbyVeg")
     @Html.ActionLink("Non-Veg", "filterbyNonVeg")
     @Html.ActionLink("Price", "filterbyPrice")
+
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.dishName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.vtype)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cuisinetype)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.price)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.img)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.restaurant.name)
-        </th>*@
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.dishName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.description)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.vtype)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.cuisinetype)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.price)
-    </td>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.img)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.restaurant.name)
-        </td>*@
-    
-    <td>
-        <form action="/Customer/orderFood" method="post" novalidate="novalidate">
-            <input id="quantity" name="quantity" type="number" />
-            <input id="dishname" name="dishname" type="hidden" value=@item.dishName>
-            <input id="price" name="price" type="hidden" value=@item.price>
+@if (Model.Any())
+{
+    <div class="gallery-container">
+        @foreach (var item in Model)
+        {
+            <div class="gallery">
+                <a  href="">
+                    <img src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Cinque Terre" width="600" height="400">
+                </a>
+                <div class="desc">
+                    <h2 class="dish-name">@item.dishName</h2>
+                    <h3 class="dish-description"> @item.description</h3>
+                    <p>@item.vtype</p>
+                    <p><span>&#8377;</span>@item.price</p>
+                    <form action="/Customer/orderFood" method="post" novalidate="novalidate">
+                        <input id="quantity" name="quantity" type="number" class="order-bar" />
+                        <input id="dishname" name="dishname" type="hidden" value=@item.dishName>
+                        <input id="price" name="price" type="hidden" value=@item.price>
 
 
-            <input type="submit" value="Add">
-        </form>
-        <p>@ViewBag.errorMessage</p>
-    </td>
-</tr>
+                        <input type="submit" value="Add">
+                    </form>
+                    @*<ul>
+            <li>@Html.ActionLink("Add reservation info", "addReservationinfo", new { id = item.id }) |</li>
+            <li>@Html.ActionLink("Edit Status", "EditValues", new { id = item.id }) |</li>
+            <li>@Html.ActionLink("Menu", "viewMenu", new { id = item.id })</li>
+        </ul>*@
+                </div>
+            </div>
+
+
+        }
+    </div>
 }
 
-</table>
+else
+{
+    <h2> No results found</h2>
+}
+<p>@ViewBag.errorMessage</p>
+
+

@@ -138,3 +138,16 @@ position: absolute;
 th {
     font-weight:900;
 }
+
+.dish-name {
+margin-top:0;
+}
+
+.dish-description {
+    margin-top: 0;
+}
+
+.order-bar {
+    width: 50px;
+    border-radius: 10px;
+}

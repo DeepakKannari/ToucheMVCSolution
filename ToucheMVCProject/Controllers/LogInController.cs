@@ -32,7 +32,7 @@ namespace ToucheMVCProject.Controllers
                     case "customer": if (dbContext.orders.Any(ord => ord.custId.Equals(result.userId)))
                         {
                             var maxvalue = dbContext.orders.Where(ord => ord.custId.Equals(result.userId)).Select(s => s.orderid).Max();
-                            TempData["orderId"] = maxvalue;
+                            TempData["orderId"] = ++ maxvalue;
                         }
                         else
                         {

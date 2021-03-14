@@ -5,81 +5,101 @@
     Layout = "~/Views/Shared/CustomerLayout.cshtml";
 }
 
-<h2>filtredRestaurantsView</h2>
+<h1 class="heading">Restaurants near you</h1>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+
 </p>
 @if (Model.Any())
 {
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.category)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.opentime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.closetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.city)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.reservation.customerId)
-        </th>*@
-        <th></th>
-    </tr>
-    
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.category)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.opentime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.closetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.city)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.reservation.customerId)
-        </td>*@
-        <td>
-            @Html.ActionLink("Make a reservation", "ReserverTable", new { id = item.id }) 
-            @*@Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })*@
-        </td>
-    </tr>
-}
+    <div class="gallery-container">
+        @foreach (var item in Model)
+        {
+            <div class="gallery">
+                <a  href="">
+                    <img src="https://images.pexels.com/photos/2290070/pexels-photo-2290070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Cinque Terre" width="600" height="400">
+                </a>
+                <div class="desc">
+                    <h3>
+                        @item.name</h3>
+                            <p> @item.address</p>
+                            <p>@item.category</p>
+                            @*<ul>
+                                    <li>@Html.ActionLink("Add reservation info", "addReservationinfo", new { id = item.id }) |</li>
+                                    <li>@Html.ActionLink("Edit Status", "EditValues", new { id = item.id }) |</li>
+                                    <li>@Html.ActionLink("Menu", "viewMenu", new { id = item.id })</li>
+                                </ul>*@
+                </div>
+            </div>
+            <!--<table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.category)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.opentime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.closetime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.city)
+                    </th>-->
+            @*<th>
+                    @Html.DisplayNameFor(model => model.reservation.customerId)
+                </th>*@
+            <!--<th></th>
+            </tr>-->
 
-</table>
-}
-else
-{
-    <h2>No restaurants in that location </h2>
-}
-<p>@ViewBag.errorMessage</p>
+            @*@foreach (var item in Model)
+            {*@
+                <!--<tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.opentime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.closetime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.city)
+                    </td>-->
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.reservation.customerId)
+                    </td>*@
+                <!--<td>
+                    @Html.ActionLink("Make a reservation", "ReserverTable", new { id = item.id })-->
+                @*@Html.ActionLink("Details", "Details", new { id=item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.id })*@
+                <!--</td>
+                </tr>-->
+            }
+
+            @*</table*@>
+        </div>
+     }
+        else
+        {
+        <h2>No restaurants in that location </h2>
+        }
+        <p>@ViewBag.errorMessage</p>

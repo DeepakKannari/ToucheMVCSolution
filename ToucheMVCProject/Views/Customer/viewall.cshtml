@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "viewall";
+    Layout = "~/Views/Shared/CustomerLayout.cshtml";
+}
+@Ajax.ActionLink("All", "SearchFoodByLoation", new AjaxOptions()
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "divmenu",
+    InsertionMode = InsertionMode.Replace
+}) |
+
+@Ajax.ActionLink("Veg", "filterbyVeg", new AjaxOptions()
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "divmenu",
+    InsertionMode = InsertionMode.Replace
+}) |
+
+@*@Ajax.ActionLink("Non-veg", "filterbyNonVeg", new AjaxOptions()
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "divmenu",
+    InsertionMode = InsertionMode.Replace
+}) |
+
+@Ajax.ActionLink("Price", "filterbyPrice", new AjaxOptions()
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "divmenu",
+    InsertionMode = InsertionMode.Replace
+})*@
+
+<div id="divmenu">
+</div>
+<h2>viewall</h2>
+
