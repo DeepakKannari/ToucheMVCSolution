@@ -11,57 +11,118 @@ namespace ToucheMVCProject.Controllers
     {
         // GET: Admin
         toucheEntities dbContext = new toucheEntities();
+
         public ActionResult Index()
         {
-            var result = dbContext.restaurants.Select(s => s);
+            if (TempData.ContainsKey("adminId"))
+            {
+                var result = dbContext.restaurants.Select(s => s);
 
-            return View(result);
+                return View(result);
+            }
+            else
+            {
+                TempData.Clear();
+               return  RedirectToAction("LogIn", "LogIn");
+            }
         }
 
         public ActionResult addRestaurant()
         {
+            if (TempData.ContainsKey("adminId"))
+            {
+                restaurantViewModel restaurantView = new restaurantViewModel();
+                ViewBag.status = restaurantView.listOfStatus;
 
-            return View();
+                return View();
+            }
+            else
+            {
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
+            }
         }
         [HttpPost]
         public ActionResult addRestaurant(restaurantViewModel formvalues)
         {
-            try
+            if (TempData.ContainsKey("adminId"))
             {
-                restaurant restaurantTuple = formvalues.getRestaurantValues();
-                dbContext.restaurants.Add(restaurantTuple);
-                dbContext.SaveChanges();
-                return RedirectToAction("index");
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        restaurantViewModel restaurantView = new restaurantViewModel();
+                        ViewBag.status = restaurantView.listOfStatus;
+                        restaurant restaurantTuple = formvalues.getRestaurantValues();
+                        dbContext.restaurants.Add(restaurantTuple);
+                        dbContext.SaveChanges();
+                        return RedirectToAction("index");
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.exception = ex.Message;
+                    }
+                    return View();
+                }
+                else
+                {
+                    return View();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                ViewBag.exception = ex.Message;
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
             }
-            return View();
         }
 
         public ActionResult addReservationinfo(int id)
         {
-            ReservationInfoViewModel ReservationInfoTuple = new ReservationInfoViewModel();
-            ViewBag.timeSlot = ReservationInfoTuple.timeSlots;
-            ViewBag.restaurantId = id;
-            return View();
+            if (TempData.ContainsKey("adminId"))
+            {
+                ReservationInfoViewModel ReservationInfoTuple = new ReservationInfoViewModel();
+                ViewBag.timeSlot = ReservationInfoTuple.timeSlots;
+                ViewBag.restaurantId = id;
+                return View();
+            }
+            else
+            {
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
+            }
         }
         [HttpPost]
         public ActionResult addReservationinfo(ReservationInfoViewModel formValues)
         {
-            try
+            if (TempData.ContainsKey("adminId"))
             {
-                reservationInfo reservationInfoTuple = formValues.getReservationInfoValues();
-                dbContext.reservationInfoes.Add(reservationInfoTuple);
-                dbContext.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        ReservationInfoViewModel ReservationInfoTuple = new ReservationInfoViewModel();
+                        ViewBag.timeSlot = ReservationInfoTuple.timeSlots;
+                        reservationInfo reservationInfoTuple = formValues.getReservationInfoValues();
+                        dbContext.reservationInfoes.Add(reservationInfoTuple);
+                        dbContext.SaveChanges();
 
-                return RedirectToAction("index");
+                        return RedirectToAction("index");
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.exception = ex.Message;
+                        return View();
+                    }
+                }
+                else
+                {
+                    return View();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                ViewBag.exception = ex.Message;
-                return View();
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
             }
 
 
@@ -69,86 +130,143 @@ namespace ToucheMVCProject.Controllers
 
         public ActionResult viewReservationInfo()
         {
-            return View();
+            if (TempData.ContainsKey("adminId"))
+            {
+                return View();
+            }
+            else
+            {
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
+            }
         }
 
         public ActionResult viewMenu(int id)
         {
 
-            var result = dbContext.Menus.Where(s => s.restaurantId.Equals(id));
+            if (TempData.ContainsKey("adminId"))
+            {
+                var result = dbContext.Menus.Where(s => s.restaurantId.Equals(id));
 
-            return View(result);
+                return View(result);
+            }
+            else
+            {
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
+            }
         }
 
         public ActionResult addMenuItems()
         {
-            menuViewModel menuView = new menuViewModel();
-            ViewBag.type = menuView.types;
-            menuView.populateDropdownlists();
-            ViewBag.ids = menuView.restaurantIds;
-            return View();
+            if (TempData.ContainsKey("adminId"))
+            {
+                menuViewModel menuView = new menuViewModel();
+                ViewBag.type = menuView.types;
+                menuView.populateDropdownlists();
+                ViewBag.ids = menuView.restaurantIds;
+                return View();
+            }
+            else
+            {
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
+            }
         }
         [HttpPost]
         public ActionResult addMenuItems(menuViewModel formValues)
         {
-            try
+            if (TempData.ContainsKey("adminId"))
             {
-                Menu menuItem = formValues.menuInfoValues();
-                dbContext.Menus.Add(menuItem);
-                dbContext.SaveChanges();
-                return RedirectToAction("index");
+                try
+                {
+                    
+                        menuViewModel menuView = new menuViewModel();
+                        ViewBag.type = menuView.types;
+                        menuView.populateDropdownlists();
+                        ViewBag.ids = menuView.restaurantIds;
+                        Menu menuItem = formValues.menuInfoValues();
+                        dbContext.Menus.Add(menuItem);
+                        dbContext.SaveChanges();
+                        return RedirectToAction("index");
+                    
+                    
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.exception = ex.Message;
+                    return View();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                ViewBag.exception = ex.Message;
-                return View();
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
             }
         }
 
         public ActionResult EditValues(int id)
         {
-            var result = dbContext.restaurants.SingleOrDefault(s => s.id.Equals(id));
-
-            if (result.status == "open")
+            if (TempData.ContainsKey("adminId"))
             {
-                result.status = "closed";
-                dbContext.SaveChanges();
+                var result = dbContext.restaurants.SingleOrDefault(s => s.id.Equals(id));
+
+                if (result.status == "open")
+                {
+                    result.status = "closed";
+                    dbContext.SaveChanges();
+                }
+                else
+                {
+                    result.status = "open";
+                    dbContext.SaveChanges();
+                }
+                return RedirectToAction("index");
             }
             else
             {
-                result.status = "open";
-                dbContext.SaveChanges();
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
             }
-            return RedirectToAction("index");
         }
 
         public ActionResult viewReservation()
         {
-            var joinedTable = dbContext.reservations.Join(dbContext.restaurants,
+            if (TempData.ContainsKey("adminId"))
+            {
+                var joinedTable = dbContext.reservations.Join(dbContext.restaurants,
                 re => re.restaurantId,
                 r => r.id,
                 (re, r) => new { restaurantname = r.name, id = re.Id, noofpeople = re.noOfPeople, customerid = re.customerId, restaurantid = re.restaurantId, timeslot = re.timeslot });
-            var result = joinedTable.Select(s => s);
-            List<reservationViewModel> reservations = new List<reservationViewModel>();
-            foreach (var item in result)
-            {
-                reservationViewModel reservation = new reservationViewModel();
-                reservation.Id = item.id;
-                reservation.noOfPeople = item.noofpeople;
-                reservation.restaurantId = item.restaurantid;
-                reservation.restaurantName = item.restaurantname;
-                reservation.timeslot = item.timeslot;
-                reservation.customerId = item.customerid;
+                var result = joinedTable.Select(s => s);
+                List<reservationViewModel> reservations = new List<reservationViewModel>();
+                foreach (var item in result)
+                {
+                    reservationViewModel reservation = new reservationViewModel();
+                    reservation.Id = item.id;
+                    reservation.noOfPeople = item.noofpeople;
+                    reservation.restaurantId = item.restaurantid;
+                    reservation.restaurantName = item.restaurantname;
+                    reservation.timeslot = item.timeslot;
+                    reservation.customerId = item.customerid;
 
-                reservations.Add(reservation);
+                    reservations.Add(reservation);
+                }
+                return View(reservations);
+                //var reservationTable = dbContext.reservations.Select(s => s);
+                //return View(reservationTable);
             }
-            return View(reservations);
-            //var reservationTable = dbContext.reservations.Select(s => s);
-            //return View(reservationTable);
+            else
+            {
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
+            }
         }
         public ActionResult clearReservation(int id)
         {
-            var reservationTuple = dbContext.reservations.SingleOrDefault(s=>s.Id.Equals(id));
+            if (TempData.ContainsKey("adminId"))
+            {
+                var reservationTuple = dbContext.reservations.SingleOrDefault(s=>s.Id.Equals(id));
             clearedreservation clearReservation = new clearedreservation();
             int restaurantId;
             
@@ -177,19 +295,35 @@ namespace ToucheMVCProject.Controllers
 
                 return RedirectToAction("viewReservation");
             }
+            }
+            else
+            {
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
+            }
 
             return View();
         }
 
         public ActionResult viewOrders()
         {
-            var result = dbContext.orders.Select(s=>s);
+            if (TempData.ContainsKey("adminId"))
+            {
+                var result = dbContext.orders.Select(s => s);
 
-            return View(result);
+                return View(result);
+            }
+            else
+            {
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
+            }
         }
         public ActionResult clearOrder(string customerid, int orderid)
         {
-            var ordertuple = dbContext.orders.SingleOrDefault(s => s.orderid.Equals(orderid) && s.custId.Equals(customerid));
+            if (TempData.ContainsKey("adminId"))
+            {
+                var ordertuple = dbContext.orders.SingleOrDefault(s => s.orderid.Equals(orderid) && s.custId.Equals(customerid));
             delivered deliveredtuple = new delivered();
             if (ordertuple != null)
             {
@@ -200,11 +334,25 @@ namespace ToucheMVCProject.Controllers
                 deliveredtuple.quantity = ordertuple.quantity;
 
                 dbContext.delivereds.Add(deliveredtuple);
+                    dbContext.SaveChanges();
                 dbContext.orders.Remove(ordertuple);
                 dbContext.SaveChanges();
                 return RedirectToAction("viewOrders");
             }
             return View();
+            }
+            else
+            {
+                TempData.Clear();
+                return RedirectToAction("LogIn", "LogIn");
+            }
+        }
+
+        public ActionResult logout()
+        {
+            TempData.Clear();
+
+            return RedirectToAction("LogIn","LogIn");
         }
 
 

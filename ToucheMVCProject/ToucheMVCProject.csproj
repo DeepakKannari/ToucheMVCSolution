@@ -267,6 +267,8 @@
     <Content Include="Views\Admin\viewOrders.cshtml" />
     <Content Include="Views\Customer\viewOrders.cshtml" />
     <Content Include="Views\Customer\viewall.cshtml" />
+    <Content Include="Views\Shared\LoginLayout.cshtml" />
+    <Content Include="Views\LogIn\Registration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

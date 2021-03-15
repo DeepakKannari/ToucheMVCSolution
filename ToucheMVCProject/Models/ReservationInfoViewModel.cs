@@ -11,15 +11,22 @@ namespace ToucheMVCProject.Models
     {
         [Required]
         [Display(Name ="Resturant Id")]
+        [RegularExpression("[0-9]+",ErrorMessage = "Please enter only numbers for Resturant Id")]
+        [Range(1, 1000)]
         public int resturantId { get; set; }
         [Required]
         [Display(Name = "Time slot")]
+       
         public string Timeslot { get; set; }
         [Required]
         [Display(Name = "Total seats")]
+        [RegularExpression("[0-9]+", ErrorMessage = "Please enter only numbers for Total seats")]
+        [Range(1, 1000)]
         public Nullable<int> TotalNoseats { get; set; }
         [Required]
         [Display(Name = "Available seats")]
+        [RegularExpression("[0-9]+", ErrorMessage = "Please enter only numbers for Available seats")]
+        [Range(1, 1000)]
         public Nullable<int> availableSeats { get; set; }
 
        public List<SelectListItem> timeSlots = new List<SelectListItem>()

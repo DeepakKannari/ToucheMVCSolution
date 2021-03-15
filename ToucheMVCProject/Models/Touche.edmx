@@ -52,7 +52,6 @@
           <Property Name="dishName" Type="varchar" MaxLength="20" />
           <Property Name="description" Type="varchar" MaxLength="50" />
           <Property Name="vtype" Type="varchar" MaxLength="20" />
-          <Property Name="cuisinetype" Type="varchar" MaxLength="20" />
           <Property Name="price" Type="float" />
           <Property Name="img" Type="varchar" MaxLength="255" />
         </EntityType>
@@ -337,7 +336,6 @@
           <Property Name="dishName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="vtype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="cuisinetype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="price" Type="Double" />
           <Property Name="img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="restaurant" Relationship="Self.resturantid_fk" FromRole="Menu" ToRole="restaurant" />
@@ -650,7 +648,6 @@
                 <ScalarProperty Name="dishName" ColumnName="dishName" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="vtype" ColumnName="vtype" />
-                <ScalarProperty Name="cuisinetype" ColumnName="cuisinetype" />
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="img" ColumnName="img" />
               </MappingFragment>

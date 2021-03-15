@@ -19,7 +19,6 @@ namespace ToucheMVCProject.Models
         public string dishName { get; set; }
         public string description { get; set; }
         public string vtype { get; set; }
-        public string cuisinetype { get; set; }
         public Nullable<double> price { get; set; }
         public string img { get; set; }
     

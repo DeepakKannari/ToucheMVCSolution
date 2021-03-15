@@ -11,33 +11,40 @@ namespace ToucheMVCProject.Models
     {
         toucheEntities dbcontext = new toucheEntities();
         [Required]
+        [Display(Name = "restaurant Id")]
         [Range(0, 1000, ErrorMessage = "The id should be between 0-1000")]
         
         public int id { get; set; }
         [Required]
+        [Display(Name = "Name")]
         [RegularExpression("[A-Za-z ]+",ErrorMessage = "please only use alphabet")]
         public string name { get; set; }
         [Required]
+        [Display(Name = "Address")]
         [RegularExpression("[A-Za-z0-9 ]+", ErrorMessage = "please only use alphabet and numbers")]
         public string address { get; set; }
         [Required]
+        [Display(Name = "Status")]
         public string status { get; set; }
         [Required]
         [RegularExpression("[A-Za-z ]+", ErrorMessage = "please only use alphabet")]
+        [Display(Name = "Category")]
         public string category { get; set; }
+        //[Required]
+        //public Nullable<System.TimeSpan> opentime { get; set; }
+        //[Required]
+        //public Nullable<System.TimeSpan> closetime { get; set; }
         [Required]
-        public Nullable<System.TimeSpan> opentime { get; set; }
-        [Required]
-        public Nullable<System.TimeSpan> closetime { get; set; }
-        [Required]
-        
-      
-        [RegularExpression("[A-Za-z ]+")]
+          
+        [Display(Name = "City")]
+        [RegularExpression("[A-Za-z ]+", ErrorMessage = "please only use alphabet")]
+
         public string city { get; set; }
 
         public string selectedLocation { get; set; }
 
-        [Required]
+        //[Required]
+        //[Display(Name = "Image Url")]
         public string img { get; set; }
 
         public List<SelectListItem> listOfStatus = new List<SelectListItem>()

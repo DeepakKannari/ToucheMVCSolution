@@ -13,21 +13,31 @@ namespace ToucheMVCProject.Models
 
         [Required]
         [Display(Name = "Reservation Id")]
+        [RegularExpression("[0-9]+", ErrorMessage = "Please enter only numbers for reservation Id")]
+        [Range(1, 1000)]
         public int Id { get; set; }
         [Required]
         [Display(Name = "Customer Id")]
+        [RegularExpression("[A-Za-z0-9]+", ErrorMessage = "Please enter only alpha-numeric for user Id")]
+        [Range(1, 1000)]
         public string customerId { get; set; }
         [Required]
-        //[Display(Name = "Restaurant Id")]
+        [Display(Name = "Restaurant Id")]
+        [RegularExpression("[0-9]+", ErrorMessage = "Please enter only numbers for Restaurant Id")]
+        [Range(1, 1000)]
         public Nullable<int> restaurantId { get; set; }
         [Required]
-        //[Display(Name = "Time Slot")]
+        [Display(Name = "Time Slot")]
         public string timeslot { get; set; }
         [Required]
-        //[Display(Name = "No. of people")]
-        [Remote("isSeatAvailable", "Customer", AdditionalFields = "restaurantId,timeslot", ErrorMessage ="that many seats are not available")]
+        [Display(Name = "No. of people")]
+        [Range(1, 1000)]
+        [Remote("isSeatAvailable", "Customer", AdditionalFields = "restaurantId,timeslot", ErrorMessage ="That many seats are not available")]
         public Nullable<int> noOfPeople { get; set; }
 
+        [Required]
+        [Display(Name = "Restaurant Name")]
+        [RegularExpression("[a-zA-Z ]+", ErrorMessage = "Please enter only alphabet for Restaurant Name")]
         public string restaurantName { get; set; }
 
         public List<SelectListItem> timeSlots = new List<SelectListItem>();

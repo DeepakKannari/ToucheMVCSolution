@@ -89,8 +89,8 @@ namespace ToucheMVCProject.Controllers
                     var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
                     r => r.id,
                     m => m.restaurantId,
-                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, cuisinetype = m.cuisinetype, price = m.price });
-                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, cuisinetype = m.cuisinetype, price = m.price });
+                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, price = m.price });
+                    var result = joinedTable.Where(s => s.location.Equals(location.ToLower()) && s.status.Equals("open")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, /*cuisinetype = m.cuisinetype,*/ price = m.price });
                     List<Menu> menuTable = new List<Menu>();
 
                     foreach (var item in result)
@@ -100,7 +100,7 @@ namespace ToucheMVCProject.Controllers
                         mentuple.dishName = item.dishname;
                         mentuple.description = item.description;
                         mentuple.vtype = item.type;
-                        mentuple.cuisinetype = item.cuisinetype;
+                        //mentuple.cuisinetype = item.cuisinetype;
                         mentuple.price = item.price;
                         menuTable.Add(mentuple);
                     }
@@ -154,7 +154,7 @@ namespace ToucheMVCProject.Controllers
             {
                 if (TempData.ContainsKey("custId"))
                 {
-                    var result = dbContext.restaurants.Where(s => s.city.Equals(location) && s.status.Equals("open"));
+                    var result = dbContext.restaurants.Where(s => s.city.Equals(location.ToLower()) && s.status.Equals("open"));
                     return View(result);
 
                 }
@@ -395,8 +395,8 @@ namespace ToucheMVCProject.Controllers
                     var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
                     r => r.id,
                     m => m.restaurantId,
-                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, cuisinetype = m.cuisinetype, price = m.price });
-                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open") && s.type.Equals("veg")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, cuisinetype = m.cuisinetype, price = m.price });
+                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, /*cuisinetype = m.cuisinetype*/ price = m.price });
+                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open") && s.type.Equals("veg")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type/*, cuisinetype = m.cuisinetype*/, price = m.price });
                     List<Menu> menuTable = new List<Menu>();
 
                     foreach (var item in result)
@@ -406,7 +406,7 @@ namespace ToucheMVCProject.Controllers
                         mentuple.dishName = item.dishname;
                         mentuple.description = item.description;
                         mentuple.vtype = item.type;
-                        mentuple.cuisinetype = item.cuisinetype;
+                        //mentuple.cuisinetype = item.cuisinetype;
                         mentuple.price = item.price;
                         menuTable.Add(mentuple);
                     }
@@ -439,8 +439,8 @@ namespace ToucheMVCProject.Controllers
                     var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
                     r => r.id,
                     m => m.restaurantId,
-                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, cuisinetype = m.cuisinetype, price = m.price });
-                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open") && s.type.Equals("non-veg")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, cuisinetype = m.cuisinetype, price = m.price });
+                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype/*, cuisinetype = m.cuisinetype*/, price = m.price });
+                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open") && s.type.Equals("non-veg")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, /*cuisinetype = m.cuisinetype,*/ price = m.price });
                     List<Menu> menuTable = new List<Menu>();
 
                     foreach (var item in result)
@@ -450,7 +450,7 @@ namespace ToucheMVCProject.Controllers
                         mentuple.dishName = item.dishname;
                         mentuple.description = item.description;
                         mentuple.vtype = item.type;
-                        mentuple.cuisinetype = item.cuisinetype;
+                        //mentuple.cuisinetype = item.cuisinetype;
                         mentuple.price = item.price;
                         menuTable.Add(mentuple);
                     }
@@ -483,8 +483,8 @@ namespace ToucheMVCProject.Controllers
                     var joinedTable = dbContext.restaurants.Join(dbContext.Menus,
                     r => r.id,
                     m => m.restaurantId,
-                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, cuisinetype = m.cuisinetype, price = m.price });
-                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, cuisinetype = m.cuisinetype, price = m.price }).OrderBy(m=>m.price);
+                    (r, m) => new { rname = r.name, rid = r.id, location = r.city, status = r.status, menuitemId = m.menuItemId, dishName = m.dishName, description = m.description, type = m.vtype, /*cuisinetype = m.cuisinetype,*/ price = m.price });
+                    var result = joinedTable.Where(s => s.location.Equals(location) && s.status.Equals("open")).Select(m => new { rname = m.rname, rid = m.rid, menuitemId = m.menuitemId, dishname = m.dishName, description = m.description, type = m.type, /*cuisinetype = m.cuisinetype,*/ price = m.price }).OrderBy(m=>m.price);
                     List<Menu> menuTable = new List<Menu>();
 
                     foreach (var item in result)
@@ -494,7 +494,7 @@ namespace ToucheMVCProject.Controllers
                         mentuple.dishName = item.dishname;
                         mentuple.description = item.description;
                         mentuple.vtype = item.type;
-                        mentuple.cuisinetype = item.cuisinetype;
+                        
                         mentuple.price = item.price;
                         menuTable.Add(mentuple);
                     }
@@ -542,6 +542,12 @@ namespace ToucheMVCProject.Controllers
         {
             var result = dbContext.reservationInfoes.Where(s=>s.resturantId.Equals(restaurantId) && s.Timeslot.Equals(timeslot)).Any(s => s.availableSeats >= noOfPeople);
             return Json(result,JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LogOut()
+        {
+            TempData.Clear();
+            return RedirectToAction("LogIn","LogIn");
         }
 
        

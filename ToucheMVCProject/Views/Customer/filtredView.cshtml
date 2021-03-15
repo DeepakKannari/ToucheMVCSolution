@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/CustomerLayout.cshtml";
 }
 
-<h2>filtredView</h2>
+<h1 class="heading">Filtred View</h1>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
 </p>
 <table class="table">
     <tr>
@@ -24,18 +24,11 @@
         <th>
             @Html.DisplayNameFor(model => model.category)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.opentime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.closetime)
-        </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.city)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.reservation.customerId)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -53,22 +46,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.category)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.opentime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.closetime)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.city)
         </td>
+        
         <td>
-            @Html.DisplayFor(modelItem => item.reservation.customerId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
             @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })*@
         </td>
     </tr>
 }

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2 style="text-align:center; margin-right:20px;">Add MenuItem</h2>
+<h2 class="heading">Add MenuItem</h2>
 
 
 <div class="form-container">
@@ -72,13 +72,7 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @*@Html.LabelFor(model => model.cuisinetype, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.cuisinetype, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cuisine Type" } })
-            @Html.ValidationMessageFor(model => model.cuisinetype, "", new { @class = "text-danger" })
-        </div>
-    </div>
+   
 
     <div class="form-group">
         @*@Html.LabelFor(model => model.price, htmlAttributes: new { @class = "control-label col-md-2" })*@
