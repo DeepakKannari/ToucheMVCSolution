@@ -14,8 +14,8 @@ namespace ToucheMVCProject.Models
     
     public partial class delivered
     {
-        public string custid { get; set; }
-        public int orderId { get; set; }
+        public string custId { get; set; }
+        public int orderid { get; set; }
         public string dishname { get; set; }
         public Nullable<double> price { get; set; }
         public Nullable<int> quantity { get; set; }

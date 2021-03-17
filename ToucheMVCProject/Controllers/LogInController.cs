@@ -96,7 +96,7 @@ namespace ToucheMVCProject.Controllers
             //}
             //else
             //{
-                return View();
+                //return View();
             //}
         }
 

@@ -274,7 +274,7 @@ namespace ToucheMVCProject.Controllers
 
             if (reservationTuple != null)
             {
-                clearReservation.Id = reservationTuple.Id;
+                clearReservation.id = reservationTuple.Id;
                 clearReservation.restaurantId = reservationTuple.restaurantId;
                 clearReservation.noOfPeople = reservationTuple.noOfPeople;
                 clearReservation.timeslot = reservationTuple.timeslot;
@@ -327,8 +327,8 @@ namespace ToucheMVCProject.Controllers
             delivered deliveredtuple = new delivered();
             if (ordertuple != null)
             {
-                deliveredtuple.custid = ordertuple.custId;
-                deliveredtuple.orderId = ordertuple.orderid;
+                deliveredtuple.custId = ordertuple.custId;
+                deliveredtuple.orderid = ordertuple.orderid;
                 deliveredtuple.dishname = ordertuple.dishname;
                 deliveredtuple.price = ordertuple.price;
                 deliveredtuple.quantity = ordertuple.quantity;

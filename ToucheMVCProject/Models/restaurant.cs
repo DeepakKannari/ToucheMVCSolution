@@ -19,6 +19,7 @@ namespace ToucheMVCProject.Models
         {
             this.Menus = new HashSet<Menu>();
             this.reservationInfoes = new HashSet<reservationInfo>();
+            this.clearedreservations = new HashSet<clearedreservation>();
         }
     
         public int id { get; set; }
@@ -34,6 +35,7 @@ namespace ToucheMVCProject.Models
         public virtual reservation reservation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<reservationInfo> reservationInfoes { get; set; }
-        public virtual clearedreservation clearedreservation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<clearedreservation> clearedreservations { get; set; }
     }
 }

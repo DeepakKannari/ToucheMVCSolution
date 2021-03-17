@@ -14,7 +14,7 @@ namespace ToucheMVCProject.Models
     
     public partial class clearedreservation
     {
-        public int Id { get; set; }
+        public int id { get; set; }
         public string customerId { get; set; }
         public Nullable<int> restaurantId { get; set; }
         public Nullable<int> noOfPeople { get; set; }

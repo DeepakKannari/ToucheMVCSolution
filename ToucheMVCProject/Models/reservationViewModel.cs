@@ -32,7 +32,7 @@ namespace ToucheMVCProject.Models
         [Required]
         [Display(Name = "No. of people")]
         [Range(1, 1000)]
-        [Remote("isSeatAvailable", "Customer", AdditionalFields = "restaurantId,timeslot", ErrorMessage ="That many seats are not available")]
+        [Remote("isSeatAvailable", "Customer", AdditionalFields = "restaurantId,timeslot", ErrorMessage = "That many seats are not available")]
         public Nullable<int> noOfPeople { get; set; }
 
         [Required]
@@ -50,10 +50,10 @@ namespace ToucheMVCProject.Models
         //};
         public List<SelectListItem> populateTimeSlot(int id)
         {
-           var result = dbContext.reservationInfoes.Where(s => s.resturantId.Equals(id)).Select(s=>s.Timeslot);
+            var result = dbContext.reservationInfoes.Where(s => s.resturantId.Equals(id)).Select(s => s.Timeslot);
             foreach (var item in result)
             {
-                timeSlots.Add(new SelectListItem() { Text = item, Value =item  });
+                timeSlots.Add(new SelectListItem() { Text = item, Value = item });
             }
 
             return timeSlots;
@@ -62,12 +62,13 @@ namespace ToucheMVCProject.Models
         public reservation reservationVallues()
         {
 
-            reservation reserv = new reservation();
-            reserv.restaurantId = this.restaurantId;
-            reserv.timeslot = this.timeslot;
+            reservation reserve = new reservation();
+            reserve.restaurantId = this.restaurantId;
+            reserve.timeslot = this.timeslot;
 
-
+            return reserve;
         }
+    }
         
         
     }
