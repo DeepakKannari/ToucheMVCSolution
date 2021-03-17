@@ -51,7 +51,7 @@
         @Html.DisplayFor(modelItem => item.quantity)
     </td>
     <td>
-            @Html.ActionLink("Delivered", "clearOrder", new { customerid=item.custId,orderId=item.orderid})
+            @Html.ActionLink("Approve", "clearOrder", new { customerid=item.custId,orderId=item.orderid})
         </td>
     <td>
     </td>
