@@ -8,10 +8,10 @@
 <h2 class="heading">Non-Veg</h2>
 
 
-<p>
-    @Html.ActionLink("All", "SearchFoodByLocation")
-    @Html.ActionLink("Veg", "filterbyVeg")
-    @Html.ActionLink("Non-Veg", "filterbyNonVeg")
+<p style="text-align:center">
+    @Html.ActionLink("All", "SearchFoodByLocation") |
+    @Html.ActionLink("Veg", "filterbyVeg") |
+    @Html.ActionLink("Non-Veg", "filterbyNonVeg") |
     @Html.ActionLink("Price", "filterbyPrice")
 
 </p>
@@ -22,7 +22,7 @@
         {
             <div class="gallery">
                 <a  href="">
-                    <img src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Cinque Terre" width="600" height="400">
+                    <img src=@item.img alt="Cinque Terre" width="600" height="400">
                 </a>
                 <div class="desc">
                     <h2 class="dish-name">@item.dishName</h2>

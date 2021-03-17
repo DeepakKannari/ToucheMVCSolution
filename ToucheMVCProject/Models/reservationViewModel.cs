@@ -58,6 +58,16 @@ namespace ToucheMVCProject.Models
 
             return timeSlots;
         }
+
+        public reservation reservationVallues()
+        {
+
+            reservation reserv = new reservation();
+            reserv.restaurantId = this.restaurantId;
+            reserv.timeslot = this.timeslot;
+
+
+        }
+        
         
     }
-}

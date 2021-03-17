@@ -5,14 +5,14 @@
     Layout = "~/Views/Shared/CustomerLayout.cshtml";
 }
 
-<h2>filterbyVeg</h2>
+<h2 class="heading">Veg</h2>
 
 
-<p>
-    @Html.ActionLink("All", "SearchFoodByLocation")
-    @Html.ActionLink("Veg", "filterbyVeg")
-    @Html.ActionLink("Non-Veg", "filterbyNonVeg")
-    @Html.ActionLink("Price", "filterbyPrice")
+<p style="text-align:center;">
+    @Html.ActionLink("All", "SearchFoodByLocation") |
+    @Html.ActionLink("Veg", "filterbyVeg") |
+    @Html.ActionLink("Non-Veg", "filterbyNonVeg") |
+    @Html.ActionLink("Price", "filterbyPrice") |
 
 </p>
 @if (Model.Any())

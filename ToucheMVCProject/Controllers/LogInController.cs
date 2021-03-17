@@ -59,7 +59,7 @@ namespace ToucheMVCProject.Controllers
 
 
 
-        [Route("registration")]
+        //[Route("registration")]
         public ActionResult Registration()
         {
 
@@ -69,8 +69,8 @@ namespace ToucheMVCProject.Controllers
         [HttpPost]
         public ActionResult Registration(RegistrationViewModel CustomerValues)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 registration newUser = new registration();
                 Customer newCustomer = new Customer();
                 address deliveryaddress = new address();
@@ -93,11 +93,11 @@ namespace ToucheMVCProject.Controllers
 
                 //dbContext.registrations.Add();
                 return RedirectToAction("LogIn");
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 return View();
-            }
+            //}
         }
 
         public JsonResult istaken(string userId)

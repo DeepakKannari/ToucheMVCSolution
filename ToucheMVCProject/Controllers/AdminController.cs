@@ -289,7 +289,7 @@ namespace ToucheMVCProject.Controllers
                     reservationInfo.availableSeats+= reservationTuple.noOfPeople;
                     dbContext.SaveChanges();
                 }
-
+                
                 dbContext.reservations.Remove(reservationTuple);
                 dbContext.SaveChanges();
 

@@ -3,12 +3,14 @@
     ViewBag.Title = "Registration";
     Layout = "~/Views/Shared/LoginLayout.cshtml";
 }
-<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+<h1 class="heading">Registration</h1>
+
+@*<link href="~/Content/Site.css" rel="stylesheet" />*@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
-<h1 class="heading">Registration</h1>
 
 <div style="display: flex; justify-content: space-around; align-items: center;">
     @using (Html.BeginForm())
@@ -65,7 +67,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Sign Up" class="login-button" />
                     <p class="text-danger">@ViewBag.exception</p>
                 </div>
             </div>
